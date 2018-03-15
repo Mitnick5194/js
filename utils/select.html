@@ -4,6 +4,67 @@
 <head>
 	<title></title>
 	<script type="text/javascript" src="jquery-1.9.1.js"></script>
+	<style type="text/css">
+		/** 滚动条 */
+.wtl-scroll{
+	-webkit-overflow-scrolling: touch; /** 移动设备滚动时使用惯性滚动样式 */
+	/** 取消默认滚动条样式 */
+	-webkit-transform: none; /* Safari 和 Chrome */
+    -ms-transform: none; /* IE 9 */
+    -o-transform: none; /* Opera */
+    -moz-transform:none; 	/* Firefox */
+    transform: none
+}
+
+.wtl-scroll::-webkit-scrollbar{
+	width: 6px;
+    height: 9px;
+}
+
+.wtl-scroll::-webkit-scrollbar-track-piece {
+    background-color: rgba(0,0,0,.04);
+}
+
+.wtl-scroll::-webkit-scrollbar-thumb,.wtl-scroll::-webkit-scrollbar-thumb:horizontal,.wtl-scroll::-webkit-scrollbar-thumb:vertical {
+    background-color: #dbd6cd;
+}
+
+.wtl-scroll::-webkit-scrollbar-thumb:vertical { /* 垂直滚动条 */
+    border-radius: 3px;
+    height: 50px;
+}
+
+.wtl-scroll::-webkit-scrollbar-thumb:horizontal { /* 水平滚动条 */
+    border-radius: 5px;
+    width: 50px
+}
+
+.wtl-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: #ccc7bf;
+}
+
+.wtl-scroll::-webkit-scrollbar-button:end:increment,.wtl-scroll::-webkit-scrollbar-button:start:decrement { /* 滚动条两端点击打按钮 */
+	background: 0 0;
+    display: none;
+}
+
+.wtl-scroll::-webkit-scrollbar-track-piece:vertical:start {
+	border-radius: 3px 3px 0 0;
+}
+
+.wtl-scroll::-webkit-scrollbar-track-piece:vertical:end {
+	border-radius: 0 0 3px 3px;
+}
+
+.wtl-scroll::-webkit-scrollbar-track-piece:horizontal:start {
+    border-radius: 5px 0 0 5px;
+}
+
+.wtl-scroll::-webkit-scrollbar-track-piece:horizontal:end {
+    border-radius: 0 5px 5px 0
+}
+				
+	</style>
 </head>
 <body>
 
@@ -39,7 +100,7 @@
 			<option value="c">12</option>
 			<option value="d" class="">13</option>
 			<option value="e">14</option>
-			<option value="f">15</option>
+			<option value="f" class="">15</option>
 		</select>
 
 	</div>
@@ -48,7 +109,7 @@
 
 <script type="text/javascript">
 	var ICON_URL = "/home/mitnick/arrow_down.png"
-	function  Select0(ele,config){
+	function  Select(ele,config){
 		var ops = $.extend({
 			kwsearch: false,
 			shownum: 8,
@@ -68,6 +129,7 @@
 
 		var isSelected = false; //当前是否有选择的项
 		var selectIdx = 0 ;// 当前选择的项的下标
+		var flag = true; //标记是否为第一次点击打开ul 如果不是第一次 则不执行滚动条滚动操作
 
 		//包裹在最外层的div
 		var plugin = $("<div/>").css({
@@ -138,8 +200,7 @@
 			display: "none",
 			"max-height": ops.shownum * 40, //40是li大概高度
 			"overflow-y": "scroll",
-
-		}).appendTo(plugin);
+		}).addClass("wtl-scroll").appendTo(plugin);
 		if(ops.ulcss && $.isPlainObject(ops.ulcss)){
 			ul.css(ops.ulcss);
 		}
@@ -174,9 +235,13 @@
 			if(offsetTop==0){
 				return;
 			}
-			ul.animate({
-				scrollTop: offsetTop*ops.shownum * li.outerHeight()
-			},300)
+			if(flag){
+				flag = false;
+				ul.animate({
+					scrollTop: offsetTop*ops.shownum * li.outerHeight()
+				},300)
+			}
+			
 		});
 		plugin.on("click","li",function(){			
 			var _this = $(this)
@@ -230,7 +295,7 @@
 </script>
 <script type="text/javascript">
 	var ele = $("#mBox");
-	var sel = new Select0(ele,{title:"载客座位数",kwsearch: true});
+	var sel = new Select(ele,{title:"载客座位数",kwsearch: true});
 	ele.on("change",function(){
 		var s = sel.getSelected();	
 	})
