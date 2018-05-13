@@ -11,9 +11,18 @@
 			z-index: 999;
 		}
 		.MAIN_BODY .CAL{
-			width: 250px;
+			margin:0 10px;
+			display: inline-block;
+			border-right: 1px solid #eee;
+			border-left: 1px solid #eee;
 		}
-		.MAIN_BODY .CAL table{
+		.MAIN_BODY .CAL:nth-child(2){  /* 为什么是2呢 这个问题很复杂 详情百度 nth-child和nth-of-type或查看有道云笔记 */
+			margin: 0;
+		}
+		.MAIN_BODY .CAL:last-child{  /* 为什么是2呢 这个问题很复杂 详情百度 nth-child和nth-of-type或查看有道云笔记 */
+			margin: 0;
+		}
+		 .CAL table{
 			width: 100%;
 			border-collapse: collapse;
 			border-spacing: 0;
@@ -122,7 +131,9 @@
 			datanode: 'data-val', //读取挂载日历元素保存日历的属性 默认为data-val属性
 			occallback: '', //打开或关闭日历时的回调
 			curdate: '', //当前选择的日期 内部使用
-			ele: '' //挂载日历的元素 内部使用 
+			ele: '', //挂载日历的元素 内部使用 
+			calwidth: 250, //单个日历的宽度
+			calnum: 1 //日历的个数 默认为1个
 		}
 		var week = ['日','一','二','三','四','五','六'];
 		var clonediv = $("<div/>");
@@ -278,7 +289,7 @@
 				date = new Date(date);
 			}
 			var div = clonediv.clone();
-			div.addClass("CAL").attr("data-date" , date.getTime()); //保存时间戳 点击上下月时需它进行计算
+			div.addClass("CAL").attr("data-date" , date.getTime()).css("width" , opt.calwidth); //保存时间戳 点击上下月时需它进行计算
 			var table = clonetable.clone();
 			var thead = table.find("thead");
 			//星期导航条
@@ -397,7 +408,10 @@
 		*/
 
 		function newCalendar( date){
-			genSubDiv(date); //调用生成一个日历的方法
+			for(var i=0;i<opt.calnum;i++){
+				genSubDiv(date); //调用生成一个日历的方法
+			}
+		
 			return MAINBODY;
 		}
 
@@ -442,7 +456,7 @@
 </script>
 <script type="text/javascript">
 	var ele = $("#cal");
-	ele.getCalendar({title:'hello world' ,datanode: 'data-date'});
+	ele.getCalendar({title:'hello world' ,datanode: 'data-date',calnum: 3});
 	ele.on("change" , function(){
 		console.log(new Date(ele.attr("data-date")));
 	})	
