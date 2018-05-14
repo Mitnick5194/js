@@ -17,6 +17,8 @@ var arr = [1,22,31,234,0,344,-1,6]
 var max = Math.max.apply(Math , arr);
 传值方式比较最大值：
 var max = Math.max(12,43,1234,421,-2,5);
+Math.max.apply方法运行的非常巧妙 因为apply第二个参数是一个数据 表示传进方法的参数，所以Math.max.apply(Math,arr)
+就等价与Math.max(1,22,31.......);
 
 Math.random() [0-1)
 min-max随机数
