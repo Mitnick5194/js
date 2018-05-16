@@ -47,3 +47,17 @@ alert(person1.hasOweProperty("name")) //false
 person1.name = "mitnick"
 alert(person1.name);//mitnick
 alert(person1.hasOweProperty("name")) //true;
+in 可以检测属性是否存在对象或原型中
+Person.prototype.name = "ajie"
+"name" in person1 //true
+person.height = 170;
+"height" in person1 //true
+属性在原型而不再实例中（即实例没有重写原型的属性）
+function hasPrototypeProperty(object , property){
+	return (property in object) && !(object.hasOweProperty);
+}
+var person = new Person();
+Person.prototype.weight = "65kg"
+hasPrototypeProperty(person , weight); //true
+person.weight = "67kg";
+hasPrototypeProperty(person , weight);//false 被重写了 hasOweProperty会返回true取反后为false
