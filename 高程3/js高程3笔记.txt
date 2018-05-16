@@ -1,0 +1,49 @@
+js中的this会随着运行的改变而改变 不能第一时间确定 要等到运行到了才能确定
+函数的局部变量在函数声明的时候就已经确定了函数域（或者说确定了调用哪里的）不会随运行的变化而变化
+除了call和apply可以传入函数的作用域外 还可以通过bind()方法
+var color = "blue;
+var o = {color: red}
+function sayColor(){
+	alert(this.color);
+}
+sayColor();//blue
+sayColor.call(o);//red
+sayColor.apply(o);//red
+sayColor.bind(o);//只是绑定 不会调起函数
+sayColor();//red 因为上面一行绑定了sayColor的作用域
+
+对比数组中的最大值：
+var arr = [1,22,31,234,0,344,-1,6]
+var max = Math.max.apply(Math , arr);
+传值方式比较最大值：
+var max = Math.max(12,43,1234,421,-2,5);
+Math.max.apply方法运行的非常巧妙 因为apply第二个参数是一个数据 表示传进方法的参数，所以Math.max.apply(Math,arr)
+就等价与Math.max(1,22,31.......);
+
+Math.random() [0-1)
+min-max随机数
+Math.floor(Math.random()*可能值的总数+第一个可能的值)
+1-10:
+Math.floor(Math.random()*9+1);//因为Math.floor(Math.random()*9)始终返回0-8的数+1就是1-9
+2-9
+Math.floor(Math.random()*8+2);
+编写一个函数：
+function selectFrom(lowerValue , upperValue){
+	var choose = upperValue - lowerValue + 1;
+	return Math.floor(Math.random()*choose+lowerValue);
+}
+
+检查原型是否指向某个对象实例：
+var person1 = new Person();
+var person2 = new Person();
+Person.prototype.isPrototypeOf(person1);//true
+Person.prototype.isPrototypOf(person2);//true
+有些浏览器支持getPrototypeOf();返回对象的原型
+person1.getPrototypeOf();//Person.prototype;
+hasOweProperty检查属性是否存在对象实例
+Person.prototype.name = "ajie"
+alert(person1.name); //ajie
+alert(person1.hasOweProperty("name")) //false
+person1.name = "mitnick"
+alert(person1.name);//mitnick
+alert(person1.hasOweProperty("name")) //true;
