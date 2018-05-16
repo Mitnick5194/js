@@ -76,7 +76,7 @@ person1.sayName();//±¨´í ÒòÎªÉÏÃæÖØĞ´ÁËÕû¸öÔ­ĞÍ ÄÇÃ´person1._proto_ÈÔÈ»Ö¸Ïò¾ÍµÄÔ
 var person2 = new Person();
 person2.sayName();//normal
 Í¼Ê¾£º
-![image](https://github.com/Mitnick5194/js/tree/master/gaocheng3/images/overPrototype.png)
+![image](https://github.com/Mitnick5194/js/blob/master/gaocheng3/images/overPrototype.png)
 Ô­ĞÍµÄ×î´óÈ±µãÊÇ¹²ÏíÊı¾İ Èç¹ûÊı¾İÊÇÒıÓÃÀàĞÍµÄ ÄÇÃ´Ò»¸ö¸Ä±ä È«²¿¸Ä±ä£º
 function Person(){}
 Person.prototype = {
