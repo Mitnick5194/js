@@ -61,3 +61,17 @@ Person.prototype.weight = "65kg"
 hasPrototypeProperty(person , weight); //true
 person.weight = "67kg";
 hasPrototypeProperty(person , weight);//false 被重写了 hasOweProperty会返回true取反后为false
+
+function Person(){}
+var person1 = new Person();
+Person.prototype = {
+	constructor: Person,
+	name : 'ajie',
+	sayName: function(){
+		alert(this.name);
+	}
+}
+person1.sayName();//报错 因为上面重写了整个原型 那么person1._proto_仍然指向就的原型 所以无法找到新原型的sayName();即使构造指回Person
+但是在下面新实例化 就可以访问
+var person2 = new Person();
+person2.sayName();//normal
