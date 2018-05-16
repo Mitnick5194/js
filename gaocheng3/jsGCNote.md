@@ -75,3 +75,55 @@ person1.sayName();//±¨´í ÒòÎªÉÏÃæÖØĞ´ÁËÕû¸öÔ­ĞÍ ÄÇÃ´person1._proto_ÈÔÈ»Ö¸Ïò¾ÍµÄÔ
 µ«ÊÇÔÚÏÂÃæĞÂÊµÀı»¯ ¾Í¿ÉÒÔ·ÃÎÊ
 var person2 = new Person();
 person2.sayName();//normal
+Í¼Ê¾£º
+![image](https://github.com/Mitnick5194/js/tree/master/gaocheng3/images/overPrototype.png)
+Ô­ĞÍµÄ×î´óÈ±µãÊÇ¹²ÏíÊı¾İ Èç¹ûÊı¾İÊÇÒıÓÃÀàĞÍµÄ ÄÇÃ´Ò»¸ö¸Ä±ä È«²¿¸Ä±ä£º
+function Person(){}
+Person.prototype = {
+	name: 'ajie',
+	friends:['Mitnick','Kobe']	//»á¹²ÏíÒıÓÃÀàĞÍµÄÊı¾İ
+}
+var person1 = new Person();
+person1.name= 'Curry';//²¢²»»á¸Ä±äÔ­ĞÍµÄÄÇÃ´
+alert("person1µÄname:"+person1.name); //Curry
+person1.friends.push("Durent");
+var person2 = new Person();
+alert("person2µÄname:"+person2.name);//ajie
+alert(person2.friends.length);//3
+alert("Ô­ĞÍµÄname£º"+Person.prototype.name) //ajie
+
+ËùÒÔÏÖÔÚÓÃµÃ±È½Ï¶àµÄÊÇ¶¯Ì¬Ô­ĞÍ¼Ó¹¹Ôì
+//¶¯Ì¬Ô­ĞÍ¼Ó¹¹Ôì 
+function Person(name , friends){
+	this.name = name;
+	this.friends = friends;
+	//Ö»ÓĞµÚÒ»´Î¹¹ÔìÊ±²Å»á¼ÓÈësayName·½·¨ ÒÔºóµÄ¶¼²»»á
+	if(typeof this.sayName !== 'function'){
+		Person.prototype.sayName = function(){
+			alert(this.name);
+		}
+	}	
+}
+var person1 = new Person("ajie" , ["Kobe" , "Durent"]);
+var person2 = new Person("Mitnick" , ['JackMa' , 'Tom']);
+alert("person1:"+ person1.name+" "+person1.friends[0]+" "+person1.friends[1]);
+person1.sayName();
+alert("person2:"+ person2.name+" "+person2.friends[0]+" "+person2.friends[1]);
+person2.sayName();
+//×¢Òâ Ê¹ÓÃ¶¯Ì¬Ô­ĞÍ ²»ÄÜÊ¹ÓÃ×ÖÃæÁ¿ÖØĞ´Ô­ĞÍ ·ñÔò»á¶Ï¿ª_proto_Á´
+
+//¼ÄÉú¹¹Ôìº¯ÊıÄ£Ê½ ÎÒÃÇÖªµÀµ±Ò»¸ö¹¹Ôìº¯ÊıÓÖ·µ»ØÖµÊÇ ÄÇÃ´Õâ¸ö¹¹Ôìº¯ÊıµÄthis¾ÍÖ¸ÏòÁË·µ»ØÖµ
+//Ò»°ãÇé¿öÏÂ ÎÒÃÇ²»ÒªÈ¥ĞŞ¸ÄjsÔ­ÉúµÄ¶ÔÏó£¨ÈçArray String)ËùÒÔÎÒÃÇ¿ÉÒÔÊ¹ÓÃ¸ÃÄ£Ê½
+function SpecialArray(){
+	var arr = new Array();
+	arr.push.apply(arr,arguments);//½«¹¹Ôìº¯Êı´«½øÀ´µÄÖµpush½øÊı×é ¾ÍÏñÊı×éÒ»Ñù
+	//¶¨Òå×Ô¶¨Òå·½·¨
+	//×¢Òâ ÕâÀïÒªÓÃarr ÒòÎªÔÚµ÷ÓÃ¸Ã¹¹Ôìº¯ÊıÊ± ÎÒÃÇµÄthisÖ¸ÕëÖ»ÄÜ²Ù¿ØarrÒòÎª×îºó·µ»ØµÄÊÇËü
+	arr.toPipeString = function(){
+		return this.join("|");
+	}
+	return arr;
+}
+
+var sa = new SpecialArray("a","b","c");
+alert(sa.toPipeString());
