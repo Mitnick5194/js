@@ -1,6 +1,6 @@
 /**
   *
-  *  常用工具类
+  *  常用工具类 纯工具类 不重写原型
   *
   *  @verson 1.0
   *  @author niezhenjie
@@ -35,3 +35,35 @@ function  selectFrom(lowerValue , upperValue){
  function getMaxFromArray(array){
  	return  Math.max.apply(Math , array);
  }
+
+ /**
+ *   忽略大小写对比两个字符串是否已相等
+ *
+ *  @param
+ *
+ *  @return 
+ */
+ function equalsIgnoreCase(str1 , str2){
+ 	return str1.toLowerCase() == str2.toLowerCase();
+ }
+
+ /**
+ *   字符串缓冲区
+ *
+ *  @param
+ *
+ *  @return 
+ */
+ function StringBuffer(){
+ 	var arr = [];
+ 	this.append = function(data){
+ 		arr.push(data);
+ 	}
+ 	this.clear = function(){
+ 		arr = [];
+ 	}
+ 	this.toString = function(){
+ 		return arr.join("");
+ 	}
+ }
+
