@@ -127,3 +127,75 @@ function SpecialArray(){
 
 var sa = new SpecialArray("a","b","c");
 alert(sa.toPipeString());
+
+//函数表达式
+函数声明会使函数自动提升 即在函数定义前面可以调用函数 而函数声明不可以（这没什么可说的）
+下面做法很危险：
+if(condition){
+	function sayHi(){
+		alert("true");
+	}
+}else{
+	function sayHi(){
+		alert("false");
+	}	
+}
+实际上 这在ECMAScript中属于错误语法 不过js引擎会尝试修复 问题就在这里 不同的浏览器的修复方式不一样 大多数浏览器会返回第二个声明
+即无论condition是true||false都alert(false);但Firefox会在condition为true时返回第一个声明 false时返回第二个声明 所以说这种做法很危险 不可以使用
+下面的做法是正确的
+var sayHi;
+if(condition){
+	sayHi = function sayHi(){
+		alert("true");
+	}
+}else{
+	sayHi = function sayHi(){
+		alert("false");
+	}	
+}
+
+闭包：有权访问另一个函数的作用域的变量的函数
+function createComparitionFunction(propertyName){
+	return function(object1 , object2){
+		var value1 = obj1[property];
+		var value2 = obj2[property]
+		if(value1>value2) return -1;
+		else if(value1 <value2) return 1;
+		else return0;
+	}
+}
+var compare = createComparitionFunction("name");
+var result = compare({name:1},{name:2});
+个函数的作用域链：
+全局作用域链 包含所有的全局变量
+com作用域链 包含comp函数的左右变量和全局变量
+compare（就是comp下面的匿名函数返回的函数）作用域链 compare作用域的所有变量 comp作用域的变量和全局作用域变量
+图示：
+![image](https://github.com/Mitnick5194/js/blob/master/gaocheng3/images/zuoyongyuchain.png)
+在createComparitionFunction函数执行完成后 createComparitionFunction 作用域的变量不会立即释放 因为compare函数在调用时包含了
+createComparitionFunction的作用域 所以闭包会占用跟多的内存
+注意 经典问题来了：
+作用域链的上述机制会引出一个值得注意的副作用，即闭包只能取得包含函数中任何变量的最后一个值（重点 如果值被改变了 只能取得最后一个）
+别忘了闭包所保存的是整个变量对象（对象 不是值）,而不是某个特殊的变量，看题：
+function createFunction(){
+	var result = new Array();
+	for(var i=0;i<10;i++){
+		result[i] = function(){
+			return i;
+		}
+	}
+	return result;
+}
+表面看 每个函数都有自己的索引值，即位置0的函数返回0 位置1返回1 以此类推 但实际上 每个都返回10 因为每个函数的作用域链中都保存在createFunction
+函数的活动对象（var i其实是属于createFunctino的作用域）所以他们引用都是同一个变量i 当createFunction返回后 变量i都为10（正如上述所说 最后一个）
+可以通过下面达到目的：
+function createFunction(){
+	var result = new Array();
+	for(var i=0;i<10;i++){
+		result[i] = (function(num){
+			return num
+		})(i);
+	}
+}
+通过一个匿名自调用函数 可以将createFunction作用域的变量i通过传值传递传给匿名函数作用域的num变量 而最终返回的是num 所以每个函数都有属于自己的
+num变量副本 所以能实现最初的设计
