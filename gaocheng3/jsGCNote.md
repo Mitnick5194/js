@@ -1,6 +1,6 @@
-jsÖĞµÄthis»áËæ×ÅÔËĞĞµÄ¸Ä±ä¶ø¸Ä±ä ²»ÄÜµÚÒ»Ê±¼äÈ·¶¨ ÒªµÈµ½ÔËĞĞµ½ÁË²ÅÄÜÈ·¶¨
-º¯ÊıµÄ¾Ö²¿±äÁ¿ÔÚº¯ÊıÉùÃ÷µÄÊ±ºò¾ÍÒÑ¾­È·¶¨ÁËº¯ÊıÓò£¨»òÕßËµÈ·¶¨ÁËµ÷ÓÃÄÄÀïµÄ£©²»»áËæÔËĞĞµÄ±ä»¯¶ø±ä»¯
-³ıÁËcallºÍapply¿ÉÒÔ´«Èëº¯ÊıµÄ×÷ÓÃÓòÍâ »¹¿ÉÒÔÍ¨¹ıbind()·½·¨
+jsä¸­çš„thisä¼šéšç€è¿è¡Œçš„æ”¹å˜è€Œæ”¹å˜ ä¸èƒ½ç¬¬ä¸€æ—¶é—´ç¡®å®š è¦ç­‰åˆ°è¿è¡Œåˆ°äº†æ‰èƒ½ç¡®å®š
+å‡½æ•°çš„å±€éƒ¨å˜é‡åœ¨å‡½æ•°å£°æ˜çš„æ—¶å€™å°±å·²ç»ç¡®å®šäº†å‡½æ•°åŸŸï¼ˆæˆ–è€…è¯´ç¡®å®šäº†è°ƒç”¨å“ªé‡Œçš„ï¼‰ä¸ä¼šéšè¿è¡Œçš„å˜åŒ–è€Œå˜åŒ–
+é™¤äº†callå’Œapplyå¯ä»¥ä¼ å…¥å‡½æ•°çš„ä½œç”¨åŸŸå¤– è¿˜å¯ä»¥é€šè¿‡bind()æ–¹æ³•
 var color = "blue;
 var o = {color: red}
 function sayColor(){
@@ -9,50 +9,50 @@ function sayColor(){
 sayColor();//blue
 sayColor.call(o);//red
 sayColor.apply(o);//red
-sayColor.bind(o);//Ö»ÊÇ°ó¶¨ ²»»áµ÷Æğº¯Êı
-sayColor();//red ÒòÎªÉÏÃæÒ»ĞĞ°ó¶¨ÁËsayColorµÄ×÷ÓÃÓò
+sayColor.bind(o);//åªæ˜¯ç»‘å®š ä¸ä¼šè°ƒèµ·å‡½æ•°
+sayColor();//red å› ä¸ºä¸Šé¢ä¸€è¡Œç»‘å®šäº†sayColorçš„ä½œç”¨åŸŸ
 
-¶Ô±ÈÊı×éÖĞµÄ×î´óÖµ£º
+å¯¹æ¯”æ•°ç»„ä¸­çš„æœ€å¤§å€¼ï¼š
 var arr = [1,22,31,234,0,344,-1,6]
 var max = Math.max.apply(Math , arr);
-´«Öµ·½Ê½±È½Ï×î´óÖµ£º
+ä¼ å€¼æ–¹å¼æ¯”è¾ƒæœ€å¤§å€¼ï¼š
 var max = Math.max(12,43,1234,421,-2,5);
-Math.max.apply·½·¨ÔËĞĞµÄ·Ç³£ÇÉÃî ÒòÎªapplyµÚ¶ş¸ö²ÎÊıÊÇÒ»¸öÊı¾İ ±íÊ¾´«½ø·½·¨µÄ²ÎÊı£¬ËùÒÔMath.max.apply(Math,arr)
-¾ÍµÈ¼ÛÓëMath.max(1,22,31.......);
+Math.max.applyæ–¹æ³•è¿è¡Œçš„éå¸¸å·§å¦™ å› ä¸ºapplyç¬¬äºŒä¸ªå‚æ•°æ˜¯ä¸€ä¸ªæ•°æ® è¡¨ç¤ºä¼ è¿›æ–¹æ³•çš„å‚æ•°ï¼Œæ‰€ä»¥Math.max.apply(Math,arr)
+å°±ç­‰ä»·ä¸Math.max(1,22,31.......);
 
 Math.random() [0-1)
-min-maxËæ»úÊı
-Math.floor(Math.random()*¿ÉÄÜÖµµÄ×ÜÊı+µÚÒ»¸ö¿ÉÄÜµÄÖµ)
+min-maxéšæœºæ•°
+Math.floor(Math.random()*å¯èƒ½å€¼çš„æ€»æ•°+ç¬¬ä¸€ä¸ªå¯èƒ½çš„å€¼)
 1-10:
-Math.floor(Math.random()*9+1);//ÒòÎªMath.floor(Math.random()*9)Ê¼ÖÕ·µ»Ø0-8µÄÊı+1¾ÍÊÇ1-9
+Math.floor(Math.random()*9+1);//å› ä¸ºMath.floor(Math.random()*9)å§‹ç»ˆè¿”å›0-8çš„æ•°+1å°±æ˜¯1-9
 2-9
 Math.floor(Math.random()*8+2);
-±àĞ´Ò»¸öº¯Êı£º
+ç¼–å†™ä¸€ä¸ªå‡½æ•°ï¼š
 function selectFrom(lowerValue , upperValue){
 	var choose = upperValue - lowerValue + 1;
 	return Math.floor(Math.random()*choose+lowerValue);
 }
 
-¼ì²éÔ­ĞÍÊÇ·ñÖ¸ÏòÄ³¸ö¶ÔÏóÊµÀı£º
+æ£€æŸ¥åŸå‹æ˜¯å¦æŒ‡å‘æŸä¸ªå¯¹è±¡å®ä¾‹ï¼š
 var person1 = new Person();
 var person2 = new Person();
 Person.prototype.isPrototypeOf(person1);//true
 Person.prototype.isPrototypOf(person2);//true
-ÓĞĞ©ä¯ÀÀÆ÷Ö§³ÖgetPrototypeOf();·µ»Ø¶ÔÏóµÄÔ­ĞÍ
+æœ‰äº›æµè§ˆå™¨æ”¯æŒgetPrototypeOf();è¿”å›å¯¹è±¡çš„åŸå‹
 person1.getPrototypeOf();//Person.prototype;
-hasOweProperty¼ì²éÊôĞÔÊÇ·ñ´æÔÚ¶ÔÏóÊµÀı
+hasOwePropertyæ£€æŸ¥å±æ€§æ˜¯å¦å­˜åœ¨å¯¹è±¡å®ä¾‹
 Person.prototype.name = "ajie"
 alert(person1.name); //ajie
 alert(person1.hasOweProperty("name")) //false
 person1.name = "mitnick"
 alert(person1.name);//mitnick
 alert(person1.hasOweProperty("name")) //true;
-in ¿ÉÒÔ¼ì²âÊôĞÔÊÇ·ñ´æÔÚ¶ÔÏó»òÔ­ĞÍÖĞ
+in å¯ä»¥æ£€æµ‹å±æ€§æ˜¯å¦å­˜åœ¨å¯¹è±¡æˆ–åŸå‹ä¸­
 Person.prototype.name = "ajie"
 "name" in person1 //true
 person.height = 170;
 "height" in person1 //true
-ÊôĞÔÔÚÔ­ĞÍ¶ø²»ÔÙÊµÀıÖĞ£¨¼´ÊµÀıÃ»ÓĞÖØĞ´Ô­ĞÍµÄÊôĞÔ£©
+å±æ€§åœ¨åŸå‹è€Œä¸å†å®ä¾‹ä¸­ï¼ˆå³å®ä¾‹æ²¡æœ‰é‡å†™åŸå‹çš„å±æ€§ï¼‰
 function hasPrototypeProperty(object , property){
 	return (property in object) && !(object.hasOweProperty);
 }
@@ -60,7 +60,7 @@ var person = new Person();
 Person.prototype.weight = "65kg"
 hasPrototypeProperty(person , weight); //true
 person.weight = "67kg";
-hasPrototypeProperty(person , weight);//false ±»ÖØĞ´ÁË hasOweProperty»á·µ»ØtrueÈ¡·´ºóÎªfalse
+hasPrototypeProperty(person , weight);//false è¢«é‡å†™äº† hasOwePropertyä¼šè¿”å›trueå–ååä¸ºfalse
 
 function Person(){}
 var person1 = new Person();
@@ -71,33 +71,33 @@ Person.prototype = {
 		alert(this.name);
 	}
 }
-person1.sayName();//±¨´í ÒòÎªÉÏÃæÖØĞ´ÁËÕû¸öÔ­ĞÍ ÄÇÃ´person1._proto_ÈÔÈ»Ö¸Ïò¾ÍµÄÔ­ĞÍ ËùÒÔÎŞ·¨ÕÒµ½ĞÂÔ­ĞÍµÄsayName();¼´Ê¹¹¹ÔìÖ¸»ØPerson
-µ«ÊÇÔÚÏÂÃæĞÂÊµÀı»¯ ¾Í¿ÉÒÔ·ÃÎÊ
+person1.sayName();//æŠ¥é”™ å› ä¸ºä¸Šé¢é‡å†™äº†æ•´ä¸ªåŸå‹ é‚£ä¹ˆperson1._proto_ä»ç„¶æŒ‡å‘å°±çš„åŸå‹ æ‰€ä»¥æ— æ³•æ‰¾åˆ°æ–°åŸå‹çš„sayName();å³ä½¿æ„é€ æŒ‡å›Person
+ä½†æ˜¯åœ¨ä¸‹é¢æ–°å®ä¾‹åŒ– å°±å¯ä»¥è®¿é—®
 var person2 = new Person();
 person2.sayName();//normal
-Í¼Ê¾£º
+å›¾ç¤ºï¼š
 ![image](https://github.com/Mitnick5194/js/blob/master/gaocheng3/images/overPrototype.png)
-Ô­ĞÍµÄ×î´óÈ±µãÊÇ¹²ÏíÊı¾İ Èç¹ûÊı¾İÊÇÒıÓÃÀàĞÍµÄ ÄÇÃ´Ò»¸ö¸Ä±ä È«²¿¸Ä±ä£º
+åŸå‹çš„æœ€å¤§ç¼ºç‚¹æ˜¯å…±äº«æ•°æ® å¦‚æœæ•°æ®æ˜¯å¼•ç”¨ç±»å‹çš„ é‚£ä¹ˆä¸€ä¸ªæ”¹å˜ å…¨éƒ¨æ”¹å˜ï¼š
 function Person(){}
 Person.prototype = {
 	name: 'ajie',
-	friends:['Mitnick','Kobe']	//»á¹²ÏíÒıÓÃÀàĞÍµÄÊı¾İ
+	friends:['Mitnick','Kobe']	//ä¼šå…±äº«å¼•ç”¨ç±»å‹çš„æ•°æ®
 }
 var person1 = new Person();
-person1.name= 'Curry';//²¢²»»á¸Ä±äÔ­ĞÍµÄÄÇÃ´
-alert("person1µÄname:"+person1.name); //Curry
+person1.name= 'Curry';//å¹¶ä¸ä¼šæ”¹å˜åŸå‹çš„é‚£ä¹ˆ
+alert("person1çš„name:"+person1.name); //Curry
 person1.friends.push("Durent");
 var person2 = new Person();
-alert("person2µÄname:"+person2.name);//ajie
+alert("person2çš„name:"+person2.name);//ajie
 alert(person2.friends.length);//3
-alert("Ô­ĞÍµÄname£º"+Person.prototype.name) //ajie
+alert("åŸå‹çš„nameï¼š"+Person.prototype.name) //ajie
 
-ËùÒÔÏÖÔÚÓÃµÃ±È½Ï¶àµÄÊÇ¶¯Ì¬Ô­ĞÍ¼Ó¹¹Ôì
-//¶¯Ì¬Ô­ĞÍ¼Ó¹¹Ôì 
+æ‰€ä»¥ç°åœ¨ç”¨å¾—æ¯”è¾ƒå¤šçš„æ˜¯åŠ¨æ€åŸå‹åŠ æ„é€ 
+//åŠ¨æ€åŸå‹åŠ æ„é€  
 function Person(name , friends){
 	this.name = name;
 	this.friends = friends;
-	//Ö»ÓĞµÚÒ»´Î¹¹ÔìÊ±²Å»á¼ÓÈësayName·½·¨ ÒÔºóµÄ¶¼²»»á
+	//åªæœ‰ç¬¬ä¸€æ¬¡æ„é€ æ—¶æ‰ä¼šåŠ å…¥sayNameæ–¹æ³• ä»¥åçš„éƒ½ä¸ä¼š
 	if(typeof this.sayName !== 'function'){
 		Person.prototype.sayName = function(){
 			alert(this.name);
@@ -110,15 +110,15 @@ alert("person1:"+ person1.name+" "+person1.friends[0]+" "+person1.friends[1]);
 person1.sayName();
 alert("person2:"+ person2.name+" "+person2.friends[0]+" "+person2.friends[1]);
 person2.sayName();
-//×¢Òâ Ê¹ÓÃ¶¯Ì¬Ô­ĞÍ ²»ÄÜÊ¹ÓÃ×ÖÃæÁ¿ÖØĞ´Ô­ĞÍ ·ñÔò»á¶Ï¿ª_proto_Á´
+//æ³¨æ„ ä½¿ç”¨åŠ¨æ€åŸå‹ ä¸èƒ½ä½¿ç”¨å­—é¢é‡é‡å†™åŸå‹ å¦åˆ™ä¼šæ–­å¼€_proto_é“¾
 
-//¼ÄÉú¹¹Ôìº¯ÊıÄ£Ê½ ÎÒÃÇÖªµÀµ±Ò»¸ö¹¹Ôìº¯ÊıÓÖ·µ»ØÖµÊÇ ÄÇÃ´Õâ¸ö¹¹Ôìº¯ÊıµÄthis¾ÍÖ¸ÏòÁË·µ»ØÖµ
-//Ò»°ãÇé¿öÏÂ ÎÒÃÇ²»ÒªÈ¥ĞŞ¸ÄjsÔ­ÉúµÄ¶ÔÏó£¨ÈçArray String)ËùÒÔÎÒÃÇ¿ÉÒÔÊ¹ÓÃ¸ÃÄ£Ê½
+//å¯„ç”Ÿæ„é€ å‡½æ•°æ¨¡å¼ æˆ‘ä»¬çŸ¥é“å½“ä¸€ä¸ªæ„é€ å‡½æ•°åˆè¿”å›å€¼æ˜¯ é‚£ä¹ˆè¿™ä¸ªæ„é€ å‡½æ•°çš„thiså°±æŒ‡å‘äº†è¿”å›å€¼
+//ä¸€èˆ¬æƒ…å†µä¸‹ æˆ‘ä»¬ä¸è¦å»ä¿®æ”¹jsåŸç”Ÿçš„å¯¹è±¡ï¼ˆå¦‚Array String)æ‰€ä»¥æˆ‘ä»¬å¯ä»¥ä½¿ç”¨è¯¥æ¨¡å¼
 function SpecialArray(){
 	var arr = new Array();
-	arr.push.apply(arr,arguments);//½«¹¹Ôìº¯Êı´«½øÀ´µÄÖµpush½øÊı×é ¾ÍÏñÊı×éÒ»Ñù
-	//¶¨Òå×Ô¶¨Òå·½·¨
-	//×¢Òâ ÕâÀïÒªÓÃarr ÒòÎªÔÚµ÷ÓÃ¸Ã¹¹Ôìº¯ÊıÊ± ÎÒÃÇµÄthisÖ¸ÕëÖ»ÄÜ²Ù¿ØarrÒòÎª×îºó·µ»ØµÄÊÇËü
+	arr.push.apply(arr,arguments);//å°†æ„é€ å‡½æ•°ä¼ è¿›æ¥çš„å€¼pushè¿›æ•°ç»„ å°±åƒæ•°ç»„ä¸€æ ·
+	//å®šä¹‰è‡ªå®šä¹‰æ–¹æ³•
+	//æ³¨æ„ è¿™é‡Œè¦ç”¨arr å› ä¸ºåœ¨è°ƒç”¨è¯¥æ„é€ å‡½æ•°æ—¶ æˆ‘ä»¬çš„thisæŒ‡é’ˆåªèƒ½æ“æ§arrå› ä¸ºæœ€åè¿”å›çš„æ˜¯å®ƒ
 	arr.toPipeString = function(){
 		return this.join("|");
 	}
@@ -128,9 +128,9 @@ function SpecialArray(){
 var sa = new SpecialArray("a","b","c");
 alert(sa.toPipeString());
 
-//º¯Êı±í´ïÊ½
-º¯ÊıÉùÃ÷»áÊ¹º¯Êı×Ô¶¯ÌáÉı ¼´ÔÚº¯Êı¶¨ÒåÇ°Ãæ¿ÉÒÔµ÷ÓÃº¯Êı ¶øº¯ÊıÉùÃ÷²»¿ÉÒÔ£¨ÕâÃ»Ê²Ã´¿ÉËµµÄ£©
-ÏÂÃæ×ö·¨ºÜÎ£ÏÕ£º
+//å‡½æ•°è¡¨è¾¾å¼
+å‡½æ•°å£°æ˜ä¼šä½¿å‡½æ•°è‡ªåŠ¨æå‡ å³åœ¨å‡½æ•°å®šä¹‰å‰é¢å¯ä»¥è°ƒç”¨å‡½æ•° è€Œå‡½æ•°å£°æ˜ä¸å¯ä»¥ï¼ˆè¿™æ²¡ä»€ä¹ˆå¯è¯´çš„ï¼‰
+ä¸‹é¢åšæ³•å¾ˆå±é™©ï¼š
 if(condition){
 	function sayHi(){
 		alert("true");
@@ -140,9 +140,9 @@ if(condition){
 		alert("false");
 	}	
 }
-Êµ¼ÊÉÏ ÕâÔÚECMAScriptÖĞÊôÓÚ´íÎóÓï·¨ ²»¹ıjsÒıÇæ»á³¢ÊÔĞŞ¸´ ÎÊÌâ¾ÍÔÚÕâÀï ²»Í¬µÄä¯ÀÀÆ÷µÄĞŞ¸´·½Ê½²»Ò»Ñù ´ó¶àÊıä¯ÀÀÆ÷»á·µ»ØµÚ¶ş¸öÉùÃ÷
-¼´ÎŞÂÛconditionÊÇtrue||false¶¼alert(false);µ«Firefox»áÔÚconditionÎªtrueÊ±·µ»ØµÚÒ»¸öÉùÃ÷ falseÊ±·µ»ØµÚ¶ş¸öÉùÃ÷ ËùÒÔËµÕâÖÖ×ö·¨ºÜÎ£ÏÕ ²»¿ÉÒÔÊ¹ÓÃ
-ÏÂÃæµÄ×ö·¨ÊÇÕıÈ·µÄ
+å®é™…ä¸Š è¿™åœ¨ECMAScriptä¸­å±äºé”™è¯¯è¯­æ³• ä¸è¿‡jså¼•æ“ä¼šå°è¯•ä¿®å¤ é—®é¢˜å°±åœ¨è¿™é‡Œ ä¸åŒçš„æµè§ˆå™¨çš„ä¿®å¤æ–¹å¼ä¸ä¸€æ · å¤§å¤šæ•°æµè§ˆå™¨ä¼šè¿”å›ç¬¬äºŒä¸ªå£°æ˜
+å³æ— è®ºconditionæ˜¯true||falseéƒ½alert(false);ä½†Firefoxä¼šåœ¨conditionä¸ºtrueæ—¶è¿”å›ç¬¬ä¸€ä¸ªå£°æ˜ falseæ—¶è¿”å›ç¬¬äºŒä¸ªå£°æ˜ æ‰€ä»¥è¯´è¿™ç§åšæ³•å¾ˆå±é™© ä¸å¯ä»¥ä½¿ç”¨
+ä¸‹é¢çš„åšæ³•æ˜¯æ­£ç¡®çš„
 var sayHi;
 if(condition){
 	sayHi = function sayHi(){
@@ -154,7 +154,7 @@ if(condition){
 	}	
 }
 
-±Õ°ü£ºÓĞÈ¨·ÃÎÊÁíÒ»¸öº¯ÊıµÄ×÷ÓÃÓòµÄ±äÁ¿µÄº¯Êı
+é—­åŒ…ï¼šæœ‰æƒè®¿é—®å¦ä¸€ä¸ªå‡½æ•°çš„ä½œç”¨åŸŸçš„å˜é‡çš„å‡½æ•°
 function createComparitionFunction(propertyName){
 	return function(object1 , object2){
 		var value1 = obj1[property];
@@ -166,17 +166,18 @@ function createComparitionFunction(propertyName){
 }
 var compare = createComparitionFunction("name");
 var result = compare({name:1},{name:2});
-¸öº¯ÊıµÄ×÷ÓÃÓòÁ´£º
-È«¾Ö×÷ÓÃÓòÁ´ °üº¬ËùÓĞµÄÈ«¾Ö±äÁ¿
-com×÷ÓÃÓòÁ´ °üº¬compº¯ÊıµÄ×óÓÒ±äÁ¿ºÍÈ«¾Ö±äÁ¿
-compare£¨¾ÍÊÇcompÏÂÃæµÄÄäÃûº¯Êı·µ»ØµÄº¯Êı£©×÷ÓÃÓòÁ´ compare×÷ÓÃÓòµÄËùÓĞ±äÁ¿ comp×÷ÓÃÓòµÄ±äÁ¿ºÍÈ«¾Ö×÷ÓÃÓò±äÁ¿
-Í¼Ê¾£º
+ä¸ªå‡½æ•°çš„ä½œç”¨åŸŸé“¾ï¼š
+å…¨å±€ä½œç”¨åŸŸé“¾ åŒ…å«æ‰€æœ‰çš„å…¨å±€å˜é‡
+comä½œç”¨åŸŸé“¾ åŒ…å«compå‡½æ•°çš„å·¦å³å˜é‡å’Œå…¨å±€å˜é‡
+compareï¼ˆå°±æ˜¯compä¸‹é¢çš„åŒ¿åå‡½æ•°è¿”å›çš„å‡½æ•°ï¼‰ä½œç”¨åŸŸé“¾ compareä½œç”¨åŸŸçš„æ‰€æœ‰å˜é‡ compä½œç”¨åŸŸçš„å˜é‡å’Œå…¨å±€ä½œç”¨åŸŸå˜é‡
+å›¾ç¤ºï¼š
+
 ![image](https://github.com/Mitnick5194/js/blob/master/gaocheng3/images/zuoyongyuchain.png)
-ÔÚcreateComparitionFunctionº¯ÊıÖ´ĞĞÍê³Éºó createComparitionFunction ×÷ÓÃÓòµÄ±äÁ¿²»»áÁ¢¼´ÊÍ·Å ÒòÎªcompareº¯ÊıÔÚµ÷ÓÃÊ±°üº¬ÁË
-createComparitionFunctionµÄ×÷ÓÃÓò ËùÒÔ±Õ°ü»áÕ¼ÓÃ¸ú¶àµÄÄÚ´æ
-×¢Òâ ¾­µäÎÊÌâÀ´ÁË£º
-×÷ÓÃÓòÁ´µÄÉÏÊö»úÖÆ»áÒı³öÒ»¸öÖµµÃ×¢ÒâµÄ¸±×÷ÓÃ£¬¼´±Õ°üÖ»ÄÜÈ¡µÃ°üº¬º¯ÊıÖĞÈÎºÎ±äÁ¿µÄ×îºóÒ»¸öÖµ£¨ÖØµã Èç¹ûÖµ±»¸Ä±äÁË Ö»ÄÜÈ¡µÃ×îºóÒ»¸ö£©
-±ğÍüÁË±Õ°üËù±£´æµÄÊÇÕû¸ö±äÁ¿¶ÔÏó£¨¶ÔÏó ²»ÊÇÖµ£©,¶ø²»ÊÇÄ³¸öÌØÊâµÄ±äÁ¿£¬¿´Ìâ£º
+åœ¨createComparitionFunctionå‡½æ•°æ‰§è¡Œå®Œæˆå createComparitionFunction ä½œç”¨åŸŸçš„å˜é‡ä¸ä¼šç«‹å³é‡Šæ”¾ å› ä¸ºcompareå‡½æ•°åœ¨è°ƒç”¨æ—¶åŒ…å«äº†
+createComparitionFunctionçš„ä½œç”¨åŸŸ æ‰€ä»¥é—­åŒ…ä¼šå ç”¨è·Ÿå¤šçš„å†…å­˜
+æ³¨æ„ ç»å…¸é—®é¢˜æ¥äº†ï¼š
+ä½œç”¨åŸŸé“¾çš„ä¸Šè¿°æœºåˆ¶ä¼šå¼•å‡ºä¸€ä¸ªå€¼å¾—æ³¨æ„çš„å‰¯ä½œç”¨ï¼Œå³é—­åŒ…åªèƒ½å–å¾—åŒ…å«å‡½æ•°ä¸­ä»»ä½•å˜é‡çš„æœ€åä¸€ä¸ªå€¼ï¼ˆé‡ç‚¹ å¦‚æœå€¼è¢«æ”¹å˜äº† åªèƒ½å–å¾—æœ€åä¸€ä¸ªï¼‰
+åˆ«å¿˜äº†é—­åŒ…æ‰€ä¿å­˜çš„æ˜¯æ•´ä¸ªå˜é‡å¯¹è±¡ï¼ˆå¯¹è±¡ ä¸æ˜¯å€¼ï¼‰,è€Œä¸æ˜¯æŸä¸ªç‰¹æ®Šçš„å˜é‡ï¼Œçœ‹é¢˜ï¼š
 function createFunction(){
 	var result = new Array();
 	for(var i=0;i<10;i++){
@@ -186,9 +187,9 @@ function createFunction(){
 	}
 	return result;
 }
-±íÃæ¿´ Ã¿¸öº¯Êı¶¼ÓĞ×Ô¼ºµÄË÷ÒıÖµ£¬¼´Î»ÖÃ0µÄº¯Êı·µ»Ø0 Î»ÖÃ1·µ»Ø1 ÒÔ´ËÀàÍÆ µ«Êµ¼ÊÉÏ Ã¿¸ö¶¼·µ»Ø10 ÒòÎªÃ¿¸öº¯ÊıµÄ×÷ÓÃÓòÁ´ÖĞ¶¼±£´æÔÚcreateFunction
-º¯ÊıµÄ»î¶¯¶ÔÏó£¨var iÆäÊµÊÇÊôÓÚcreateFunctinoµÄ×÷ÓÃÓò£©ËùÒÔËûÃÇÒıÓÃ¶¼ÊÇÍ¬Ò»¸ö±äÁ¿i µ±createFunction·µ»Øºó ±äÁ¿i¶¼Îª10£¨ÕıÈçÉÏÊöËùËµ ×îºóÒ»¸ö£©
-¿ÉÒÔÍ¨¹ıÏÂÃæ´ïµ½Ä¿µÄ£º
+è¡¨é¢çœ‹ æ¯ä¸ªå‡½æ•°éƒ½æœ‰è‡ªå·±çš„ç´¢å¼•å€¼ï¼Œå³ä½ç½®0çš„å‡½æ•°è¿”å›0 ä½ç½®1è¿”å›1 ä»¥æ­¤ç±»æ¨ ä½†å®é™…ä¸Š æ¯ä¸ªéƒ½è¿”å›10 å› ä¸ºæ¯ä¸ªå‡½æ•°çš„ä½œç”¨åŸŸé“¾ä¸­éƒ½ä¿å­˜åœ¨createFunction
+å‡½æ•°çš„æ´»åŠ¨å¯¹è±¡ï¼ˆvar iå…¶å®æ˜¯å±äºcreateFunctinoçš„ä½œç”¨åŸŸï¼‰æ‰€ä»¥ä»–ä»¬å¼•ç”¨éƒ½æ˜¯åŒä¸€ä¸ªå˜é‡i å½“createFunctionè¿”å›å å˜é‡iéƒ½ä¸º10ï¼ˆæ­£å¦‚ä¸Šè¿°æ‰€è¯´ æœ€åä¸€ä¸ªï¼‰
+å¯ä»¥é€šè¿‡ä¸‹é¢è¾¾åˆ°ç›®çš„ï¼š
 function createFunction(){
 	var result = new Array();
 	for(var i=0;i<10;i++){
@@ -197,5 +198,5 @@ function createFunction(){
 		})(i);
 	}
 }
-Í¨¹ıÒ»¸öÄäÃû×Ôµ÷ÓÃº¯Êı ¿ÉÒÔ½«createFunction×÷ÓÃÓòµÄ±äÁ¿iÍ¨¹ı´«Öµ´«µİ´«¸øÄäÃûº¯Êı×÷ÓÃÓòµÄnum±äÁ¿ ¶ø×îÖÕ·µ»ØµÄÊÇnum ËùÒÔÃ¿¸öº¯Êı¶¼ÓĞÊôÓÚ×Ô¼ºµÄ
-num±äÁ¿¸±±¾ ËùÒÔÄÜÊµÏÖ×î³õµÄÉè¼Æ
+é€šè¿‡ä¸€ä¸ªåŒ¿åè‡ªè°ƒç”¨å‡½æ•° å¯ä»¥å°†createFunctionä½œç”¨åŸŸçš„å˜é‡ié€šè¿‡ä¼ å€¼ä¼ é€’ä¼ ç»™åŒ¿åå‡½æ•°ä½œç”¨åŸŸçš„numå˜é‡ è€Œæœ€ç»ˆè¿”å›çš„æ˜¯num æ‰€ä»¥æ¯ä¸ªå‡½æ•°éƒ½æœ‰å±äºè‡ªå·±çš„
+numå˜é‡å‰¯æœ¬ æ‰€ä»¥èƒ½å®ç°æœ€åˆçš„è®¾è®¡
