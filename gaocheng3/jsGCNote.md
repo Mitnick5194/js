@@ -75,7 +75,9 @@ person1.sayName();//报错 因为上面重写了整个原型 那么person1._prot
 但是在下面新实例化 就可以访问
 var person2 = new Person();
 person2.sayName();//normal
+
 图示：
+
 ![image](https://github.com/Mitnick5194/js/blob/master/gaocheng3/images/overPrototype.png)
 原型的最大缺点是共享数据 如果数据是引用类型的 那么一个改变 全部改变：
 function Person(){}
