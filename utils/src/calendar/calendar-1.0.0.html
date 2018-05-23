@@ -294,6 +294,7 @@
 		$.prototype.getCalendar = function(config){
 			getCalendar(this , config);
 		}
+		//this指向全局 即window 所以在外部也能访问这个方法
 		this.getCalendar = function(obj , config){
 			$.extend(opt, config);
 			var ele = obj
