@@ -30,7 +30,7 @@ var ICON_URL = "/home/mitnick/arrow_down.png"
 		//包裹在最外层的div
 		var plugin = $("<div/>").css({
 			height: height,
-			width: width,
+			width: width-12, //去除padding和border
 			display: "inline-block",
 			border: "1px solid #eee",
 			cursor: "pointer",
@@ -50,7 +50,7 @@ var ICON_URL = "/home/mitnick/arrow_down.png"
 		var title_width = title.width();
 		var input = $("<input>").css({
 			height: height,
-			width: width-title_width-30,
+			width: width-title_width-30-12, //30是下拉图标的大小 12是padding和border
 			border: "none",
 			outline: "none",
 			padding: 0 ,
@@ -84,7 +84,7 @@ var ICON_URL = "/home/mitnick/arrow_down.png"
 			position: "absolute",
 			top: parentPos.top+height+1,
 			left: parentPos.left+title_width,
-			width: width - title_width,
+			width: width - title_width-12, //12是padding的大小
 			margin: 0,
 			"padding-left": 0,
 			"list-style-type" : "none",
@@ -96,7 +96,7 @@ var ICON_URL = "/home/mitnick/arrow_down.png"
 			display: "none",
 			"max-height": ops.shownum * 40, //40是li大概高度
 			"overflow-y": "scroll",
-		}).addClass("wtl-scroll _select_ul").appendTo(plugin);
+		}).addClass("wt-scroll _select_ul").appendTo(plugin);
 		if(ops.ulcss && $.isPlainObject(ops.ulcss)){
 			ul.css(ops.ulcss);
 		}
