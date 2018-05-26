@@ -1,0 +1,34 @@
+<!doctype html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<script type="text/javascript">
+/*	function recursion(n){
+		if(1==n)
+			return 1;
+		return n* recursion(n-1);
+	}
+	var ret = recursion(5);
+	alert(ret);
+	//上面定义的递归一般情况下是不会有问题的 但是有些极少发生的情况如下就会有问题：
+	var anotherRec = recursion;
+	alert(anotherRec(4)); //这部现在正常
+	recursion = null;//下面执行就不正常了
+	alert(anotherRec(3)); */
+	//下面解决上述问题
+	function recursion(n){
+		if(1>=n)
+			return 1;
+		//arguments有一个callee属性 永远指向arguments所属的函数（对象）
+		return n* arguments.callee(n-1);
+	}
+	var anotherRec = recursion;
+	recursion = null;//下面执行就不正常了
+	alert(anotherRec(5)); //正常
+</script>
+</body>
+</html>
