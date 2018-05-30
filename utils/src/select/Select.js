@@ -35,6 +35,7 @@ var ICON_URL = "/home/mitnick/arrow_down.png"
 			border: "1px solid #eee",
 			cursor: "pointer",
 			padding: "0 5px",	
+			position: "relative"
 		}).addClass("_select_dv");
 		
 		plugin.appendTo(ele);	
@@ -82,15 +83,17 @@ var ICON_URL = "/home/mitnick/arrow_down.png"
 		var ul = $("<ul>").css({
 			display: "inline-block",
 			position: "absolute",
-			top: parentPos.top+height+1,
-			left: parentPos.left+title_width,
-			width: width - title_width-12, //12是padding的大小
+			/*top: parentPos.top+height+1,
+			left: parentPos.left+title_width,*/
+			top: height+1,
+			left: title_width,
+			width: width - title_width-2, //2是border
 			margin: 0,
 			"padding-left": 0,
 			"list-style-type" : "none",
-			padding: "0 5px",
+			/*padding: "0 5px",*/
 			background: "#fff",
-			index: 1000,
+			"z-index": 1000,
 			border: "1px solid #eee",
 			"text-align": "center",
 			display: "none",
