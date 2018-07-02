@@ -81,3 +81,42 @@ function  selectFrom(lowerValue , upperValue){
 	return n* arguments.callee(n-1);
 }
 
+ /**
+  *  验证数组中是否有重复值  数组的元素只能是基本类型，不支持对象
+  *
+  *  @param
+  *
+  *  @return  存在重复值 返回true 否则返回false
+  */
+ function hasRepeat(arr){
+ 	var has = {};
+ 	for(var i=0,len=arr.length;i<len;i++){
+ 		if( has[arr[i]] ) {
+ 			return true;
+ 		}
+ 		has[ arr[i] ] = true;
+ 	}
+ 	return false;
+}
+
+ /**
+  *  验证数组中的对象某个属性是否有重复值 不支持基本类型 
+  *
+  *  @param objArr 对象集合
+  *  @param attribute 需要验证的对象属性
+  *
+  *  @return  存在重复值 返回true 否则返回false
+  */
+ function hasRepeatAttr(objArr , attribute){
+ 	var has = {};
+ 	for(var i=0,len=objArr.length;i<len;i++){
+ 		var obj = objArr[i];
+ 		if( has[obj[attribute]] ){
+ 			return true;
+ 		}
+ 		has[ obj[attribute] ] = true;
+ 	}
+ 	return false;
+}
+
+

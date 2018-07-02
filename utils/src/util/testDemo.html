@@ -9,7 +9,7 @@
 
 <script src="util.js"></script>
 <script type="text/javascript">
-	var rd = selectFrom(0 , 10);
+	/*var rd = selectFrom(0 , 10);
 	var arr = [-12,-2,0,-1433,1,-21,-1233,-98];
 	var max = getMaxFromArray(arr);
 	//alert(max);
@@ -19,7 +19,19 @@
 	sb.append("a");
 	sb.append("a");
 	alert(sb.toString());
-	console.log(String.prototype)
+	console.log(String.prototype);*/
+	function Person(name , age){
+		this.name = name;
+		this.age = age;
+	}
+	/*var arr = [1,2,'aa',34,5,82 ,3 , 'aa'];
+	console.log(hasRepeat(arr));*/
+
+	var p1 = new Person("ajie" , 25);
+	var p2 = new Person("ajie" , 25);
+	var arr = [p1 , p2];
+	console.log(hasRepeatAttr(arr , "name"));
+
 </script>
 
 </body>
