@@ -20,10 +20,10 @@
  *
  *  @return 
  */
-function  selectFrom(lowerValue , upperValue){
-	var choose  = upperValue -  lowerValue +1;
-	return Math.floor(Math.random() * choose + lowerValue);
-}
+ function  selectFrom(lowerValue , upperValue){
+ 	var choose  = upperValue -  lowerValue +1;
+ 	return Math.floor(Math.random() * choose + lowerValue);
+ }
 
 /**
  *  返回数组中的最大项
@@ -43,9 +43,9 @@ function  selectFrom(lowerValue , upperValue){
   *
   *  @return 
   */
- function equalsIgnoreCase(str1 , str2){
- 	return str1.toLowerCase() == str2.toLowerCase();
- }
+  function equalsIgnoreCase(str1 , str2){
+  	return str1.toLowerCase() == str2.toLowerCase();
+  }
 
  /**
   *   字符串缓冲区
@@ -54,18 +54,18 @@ function  selectFrom(lowerValue , upperValue){
   *
   *  @return 
   */
- function StringBuffer(){
- 	var arr = [];
- 	this.append = function(data){
- 		arr.push(data);
- 	}
- 	this.clear = function(){
- 		arr = [];
- 	}
- 	this.toString = function(){
- 		return arr.join("");
- 	}
- }
+  function StringBuffer(){
+  	var arr = [];
+  	this.append = function(data){
+  		arr.push(data);
+  	}
+  	this.clear = function(){
+  		arr = [];
+  	}
+  	this.toString = function(){
+  		return arr.join("");
+  	}
+  }
 
  /**
   *  求n的值的递归结果（注意 在严格模式下arguments.callee会导致错误）
@@ -74,9 +74,9 @@ function  selectFrom(lowerValue , upperValue){
   *
   *  @return 
   */
- function recursion(n){
-	if(1 >= n)
-		return 1;
+  function recursion(n){
+  	if(1 >= n)
+  		return 1;
 	//arguments有一个callee属性 永远指向arguments所属的函数（对象）
 	return n* arguments.callee(n-1);
 }
@@ -88,16 +88,16 @@ function  selectFrom(lowerValue , upperValue){
   *
   *  @return  存在重复值 返回true 否则返回false
   */
- function hasRepeat(arr){
- 	var has = {};
- 	for(var i=0,len=arr.length;i<len;i++){
- 		if( has[arr[i]] ) {
- 			return true;
- 		}
- 		has[ arr[i] ] = true;
- 	}
- 	return false;
-}
+  function hasRepeat(arr){
+  	var has = {};
+  	for(var i=0,len=arr.length;i<len;i++){
+  		if( has[arr[i]] ) {
+  			return true;
+  		}
+  		has[ arr[i] ] = true;
+  	}
+  	return false;
+  }
 
  /**
   *  验证数组中的对象某个属性是否有重复值 不支持基本类型 
@@ -107,16 +107,27 @@ function  selectFrom(lowerValue , upperValue){
   *
   *  @return  存在重复值 返回true 否则返回false
   */
- function hasRepeatAttr(objArr , attribute){
- 	var has = {};
- 	for(var i=0,len=objArr.length;i<len;i++){
- 		var obj = objArr[i];
- 		if( has[obj[attribute]] ){
- 			return true;
- 		}
- 		has[ obj[attribute] ] = true;
- 	}
- 	return false;
-}
+  function hasRepeatAttr(objArr , attribute){
+  	var has = {};
+  	for(var i=0,len=objArr.length;i<len;i++){
+  		var obj = objArr[i];
+  		if( has[obj[attribute]] ){
+  			return true;
+  		}
+  		has[ obj[attribute] ] = true;
+  	}
+  	return false;
+  }
+
+ /**
+  *  是否为空对象
+  *
+  *  @param obj
+  *
+  *  @return 
+  */
+  function isEmptyObj(obj){
+  	return !(Object.getOwnPropertyNames(obj).length);
+  }
 
 
