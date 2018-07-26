@@ -1,0 +1,117 @@
+<!doctype html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>演示拖动改变大小</title>
+	<style type="text/css">
+		
+		html{
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			margin: 0;
+		}
+		body{
+			width: 100%;
+			height: 100%
+			padding:0;
+			margin: 0;
+		}
+		.main{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			text-align: center;
+		}
+		.left{
+			width: 100px;
+			min-width: 100px;
+			border-right: 1px solid #e2e2e2;
+			position: relative;
+		}
+		.center{
+			width: 200px;
+			min-width: 200px;
+			border-right: 1px solid #e2e2e2;
+			position: relative;
+		}
+		.right{
+			min-width: 400px;
+		}
+		.resizeL,.resizeC{
+			position: absolute;
+			right: 0px;
+			top: 0px;
+			width: 30px;
+			height: 100%;
+			cursor: w-resize;
+		}
+
+	</style>
+</head>
+<body>
+
+	<div class="flexlayout main">
+		<div class="left">
+			<section>文学书籍</section>
+			<section>武侠小说</section>
+			<section>玄幻小说</section>
+			<section>科技杂志</section>
+			<section>技术相关</section>
+			<section>母婴知识</section>
+			<div class="resizeL"></div>
+
+		</div>
+		<div class="center">
+			<div>
+				<section>中国</section>
+				<div>
+					<section>金庸全集</section>
+					<section>其他</section>
+				</div>
+			</div>
+			<section>中国台湾</section>
+			<section>韩国</section>
+			<section>美国</section>
+			<section>俄罗斯</section>
+			<section>欧洲</section>
+			<div class="resizeC"></div>
+		</div>
+		<div class="right">
+			<div>这是金庸小说全集</div>
+		</div>
+
+	</div>
+	<script type="text/javascript" src="jquery-3.2.1.js"></script>
+	<script type="text/javascript">
+		(function(){
+			function resize(parentDom , handle , params){
+				var isLeft = params.isLeft;
+				var cx = 0;
+				handle.onmousedown = function(e){
+					e = e || event;
+					e.preventDefault();
+					cliX = e.clientX ;
+					var parentWidth = parentDom.offsetWidth;
+					document.onmousemove = function(e){
+						e = e||event;
+						var movX = e.clientX - cliX;
+						parentDom.style.width = parentWidth+ movX +"px";
+					return false;//阻止冒泡
+				}
+				document.onmouseup = function(){
+					document.onmousemove = null;
+					document.onmouseup = null;
+				}
+			}
+
+		}
+
+		resize(document.querySelector(".left") , document.querySelector(".resizeL"),{isLeft: true});
+		resize(document.querySelector(".center") , document.querySelector(".resizeC"),{isLeft: true});
+	})($);
+</script>
+
+</body>
+</html>
