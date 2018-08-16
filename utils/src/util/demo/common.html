@@ -6,8 +6,36 @@
 	<link rel="stylesheet" type="text/css" href="../common.css">
 </head>
 <body>
-<div style="height: 400px;width:100%;background: #fafafa;text-align: center;">HELLO WORLD</div>
+<div style="height: 100px;width:100%;background: #fafafa;text-align: center;">HELLO WORLD</div>
+<div id="mBtn">弹出</div>
+<div id="iFrime" style="width: 500px;height: 400px;padding: 15px; text-align: center">
+	<!-- <table style="width: 100%">
+		<tr>
+			<th>id</th><th>姓名</th><th>手机号</th><th>年龄</th>
+		</tr>
+		<tr><td>this is my name</td><td>13222222222</td><td>fale</td></tr>
+		<tr><td>this is my name</td><td>13222222222</td><td>fale</td></tr>
+		<tr><td>this is my name</td><td>13222222222</td><td>fale</td></tr>
+		<tr><td>this is my name</td><td>13222222222</td><td>fale</td></tr>
+		<tr><td>this is my name</td><td>13222222222</td><td>fale</td></tr>
+	</table> -->
+	哈哈哈哈哈
+	<div id="iHide">收起</div>
+</div>
 <script type="text/javascript" src="../jquery-1.9.1.js"></script>
 <script type="text/javascript" src="../common.js"></script>
+<script type="text/javascript">
+	
+	var frame = $("#iFrime");
+	var frameWindow = frame.getWindow();
+	$("#mBtn").on("click" , function(){
+		frameWindow.show();
+	})
+	$("#iHide").on("click" , function(){
+		frameWindow.hide(function(){
+			alert("已收起");
+		})
+	})
+</script>
 </body>
 </html>

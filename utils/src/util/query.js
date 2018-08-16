@@ -14,8 +14,8 @@
  	});
  	$.extend({
  		storage:{
- 			say: function(){
- 				alert();
+ 			set: function(key){
+ 				
  			}
  		}
  	});
