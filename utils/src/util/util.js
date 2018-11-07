@@ -130,4 +130,15 @@
   	return !(Object.getOwnPropertyNames(obj).length);
   }
 
+ /**
+  *  保留n位有效数字
+  *
+  *  @param obj
+  *
+  *  @return 
+  */
+  function formatNumber(number , index){
+  	return Math.round(number * Math.pow(10,index)) / Math.pow(10,index);
+  }
+
 
