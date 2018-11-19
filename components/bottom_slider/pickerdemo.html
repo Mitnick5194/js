@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width,user-scalable=no" />
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="picker.css">
+</head>
+<body>
+	<div id="mSelect">请选择</div>
+	<script type="text/javascript" src="picker.js"></script>
+	<script type="text/javascript">
+		var data = [{
+			name: '广州',
+			dataset:{id:1,provider:'广东'}
+		},{
+			name: '肇庆',
+			dataset: {id:2 , provider: '广东'}
+		},{
+			name: '赣州',
+			dataset: {id:3,provider:'江西'}
+		},{
+			name: '太原',
+			dataset:{id:4,provider: '山西'}
+		},{
+			name: '西宁',
+			dataset:{id:4,provider: '青海'}
+		}]
+		var picker = new SingleSlider({
+			title:"请选择",
+			//data:["广州1","肇庆2","广州3","肇庆4","广州5","肇庆6","广州7","肇庆8","广州9","肇庆10","广州11","肇庆12"],
+			data:data,
+			selectIdx: 2,
+			bindele: mSelect
+		});
+	</script>
+</body>
+</html>

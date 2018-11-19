@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>异常监听</title>
+	<script type="text/javascript">
+		
+		window.addEventListener("error" , function(e){
+			console.log("监听到错误");
+			console.log(e);
+			alert(e.error);
+		})
+	</script>
+</head>
+<body>
+
+<div>div1</div>
+
+<script type="text/javascript">
+	
+	var a;
+	alert(a.name);
+</script>
+</body>
+
+</html>

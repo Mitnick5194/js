@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="mDiv">node</div>
+<script type="text/javascript" src="jquery-1.9.1.js"></script>
+<script type="text/javascript">
+	
+	function testPrototype(){
+		console.log("testPropertype");
+	}
+
+	testPrototype.prototype = {
+		version: 1.1,
+		run: function(){
+			alert("run");
+		}
+	}
+
+	function testPrototype2(){
+		console.log("testPropertype2");
+	}
+
+
+</script>
+</body>
+</html>

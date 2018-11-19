@@ -81,3 +81,86 @@ function  selectFrom(lowerValue , upperValue){
 	return n* arguments.callee(n-1);
 }
 
+
+/**
+  *  比较str字符串的每个字符是否都一样
+  *
+  *  @param
+  *
+  *  @return 
+  */
+function isAllRepeat(str){
+  for(var i=0,len=str.length;i<len-1;i++) {
+    if(str.charAt(i) != str.charAt(i+1)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+/**
+  *  使用二分法比较str字符串的每个字符是否都一样
+  *
+  *  @param
+  *
+  *  @return 
+  */
+function isAllRepeatByBinary(str){
+  var len = str.length;
+  if(len ==2){ //长度为2（也是递归的临界值） 直接对比 
+    if(str.charAt(0) == str.charAt(1))
+      return true;
+    else
+      return false;
+  }
+  var mod = len % 2;
+  var mid = Math.floor(len / 2);
+  var str1 = str.substring(0 , mid);
+  var str2 = str.substring(mid);
+  if(!mod){ //余数是0 正好对半
+    if(str1 != str2)
+      return false;
+    else
+      return isAllRepeatByBinary(str1); //str1==str2 使用其中一段在进行二分法对比
+  }else{ //有余数 不能折半 将中间数放入其中一段 在进行二分法对比
+    str2 = str2.substring(1);//去掉中间值
+    if(str1 != str2)
+      return false;
+    else
+     return isAllRepeatByBinary(str.substring(mid));
+  }
+}
+
+/**
+  *  获取一段随机的字符串 字符串长度不可知
+  *
+  */
+function getRandomString(){
+  //首先获取一串0-1的随机数 然后将其转换成36进制 再把前面的0.去掉
+  return Math.random().toString(36).substring(2);
+}
+
+/**
+  *  小数向下取整
+  *
+  */
+function getFloorInteger(n){
+  //也可以使用~~n 和 n|0
+  return n>>0;
+}
+
+/**
+  *  将两个整数交换 以为是按值传递 所以需要返回 反则原来的数不会吧
+  *  使用：var a = 6;var b = 19;var ret = swapInteger(a , b);a = ret[0];b=ret[1];
+  *
+  *  @param
+  *
+  *  @return 交换后的数组
+  */
+function swapInteger(a , b){
+  a ^= b;
+  b ^= a;
+  a ^= b;
+  return [a , b];
+}
+
