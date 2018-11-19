@@ -3,13 +3,14 @@
  * author: niezhenjie
  */
 
-var ICON_URL = "/home/mitnick/arrow_down.png"
+var ICON_URL = "/erqi/images/arrow_down.png"
 	function  Select(ele,config){
 		var ops = $.extend({
 			kwsearch: {flag:false,isLike:true}, //flag是否支持关键字搜索 isLike是否为模糊查询 如果为false 则 1 12 123 ‘1’只匹配1 不会匹配12和123
 			shownum: 8, // 超出多少个后显示滚动条
 			slideevent: 'click',  //打开下拉框是以点击事件还是mouseenter方式
 			css: '', //显示框的样式
+			inputcss: '',  //输入框样式
 			title: '', 
 			titlecss:'',
 			ulcss: '' //下拉框样式
@@ -30,13 +31,16 @@ var ICON_URL = "/home/mitnick/arrow_down.png"
 		//包裹在最外层的div
 		var plugin = $("<div/>").css({
 			height: height,
-			width: width,
+			width: width-12, //去除padding和border
 			display: "inline-block",
 			border: "1px solid #eee",
 			cursor: "pointer",
 			padding: "0 5px",	
+			position: "relative"
 		}).addClass("_select_dv");
-		
+		if(ops.css && $.isPlainObject(ops.css)){
+			plugin.css(ops.css);
+		}
 		plugin.appendTo(ele);	
 
 		// 标题
@@ -50,7 +54,7 @@ var ICON_URL = "/home/mitnick/arrow_down.png"
 		var title_width = title.width();
 		var input = $("<input>").css({
 			height: height,
-			width: width-title_width-30,
+			width: width-title_width-30-12, //30是下拉图标的大小 12是padding和border
 			border: "none",
 			outline: "none",
 			padding: 0 ,
@@ -61,8 +65,8 @@ var ICON_URL = "/home/mitnick/arrow_down.png"
 		if(sel.attr("name")){
 			input.attr("name",sel.attr("name"));
 		}
-		if(ops.css && $.isPlainObject(ops.css)){
-			input.css(ops.css);
+		if(ops.inputcss && $.isPlainObject(ops.inputcss)){
+			input.css(ops.inputcss);
 		}
 		//下拉图片
 		var icon = $("<span>").css({
@@ -82,21 +86,23 @@ var ICON_URL = "/home/mitnick/arrow_down.png"
 		var ul = $("<ul>").css({
 			display: "inline-block",
 			position: "absolute",
-			top: parentPos.top+height+1,
-			left: parentPos.left+title_width,
-			width: width - title_width,
+			/*top: parentPos.top+height+1,
+			left: parentPos.left+title_width,*/
+			top: height+1,
+			left: title_width,
+			width: width - title_width-2, //2是border
 			margin: 0,
 			"padding-left": 0,
 			"list-style-type" : "none",
-			padding: "0 5px",
+			/*padding: "0 5px",*/
 			background: "#fff",
-			index: 1000,
+			"z-index": 1000,
 			border: "1px solid #eee",
 			"text-align": "center",
 			display: "none",
 			"max-height": ops.shownum * 40, //40是li大概高度
-			"overflow-y": "scroll",
-		}).addClass("wtl-scroll _select_ul").appendTo(plugin);
+			"overflow-x": "hidden",
+		}).addClass("wt-scroll _select_ul").appendTo(plugin);
 		if(ops.ulcss && $.isPlainObject(ops.ulcss)){
 			ul.css(ops.ulcss);
 		}
