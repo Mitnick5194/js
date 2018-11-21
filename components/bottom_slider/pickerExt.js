@@ -33,12 +33,13 @@
   *		title:"请选择",
   *		//data:["广州1","肇庆2","广州3","肇庆4","广州5","肇庆6","广州7","肇庆8","广州9","肇庆10","广州11","肇庆12"],
   *		data:data,
-  *		idx: 2
+  *		idx: 2,
+  		type3D: true //开启3d滚动模式
   *	});
   *
   *取值：picker.getSelectedNode();返回元素对象，可以从元素对象的文本和dataset获取需要的属性
   *
-  *	@Deprecated 请使用pickerExt
+  *
   *	@author niezhenjie
   */
 
@@ -52,12 +53,14 @@
 			data:[], //数据,
 			selectIdx: 0, //初始值
 			dataset: [], //dataset数据
-			bindele: '', //点击绑定元素显示选择器
+			bindele: '', //点击绑定元素后显示选择器
 			confirmText: '确定', //确定按钮显示文字
 			cancelText: '取消', //取消按钮显示文字
 			title: '', //标题
 			showcallback:null, //显示回调
-			hidecallback: null, //隐藏回调
+			hidecallback: null, //隐藏回调,
+			type3D: false, //是否使用3d效果
+			itemcount: 2, //上层和下层显示多少个元素，默认是两个
 		} , option);
   		var 
   		modal , //遮罩层
@@ -71,7 +74,7 @@
   			document.body.append(contain);
   			modal = cloneDiv.cloneNode();
   			modal.classList.add("picker-bottom-modal");
-  			modal.addEventListener("click" , fnClickModal , false);
+  			modal.addEventListener("click" , fnClickModal , true);
   			document.body.append(modal);
   			var nav = cloneDiv.cloneNode();
   			nav.classList.add("nav");
@@ -79,12 +82,12 @@
 			cancelBtn = cloneSpan.cloneNode();
 			cancelBtn.classList.add("cancel");
 			cancelBtn.innerText = opts.cancelText;
-			cancelBtn.addEventListener("click", cancel , false);
+			cancelBtn.addEventListener("click", cancel , true);
 			//确定
 			confirmBtn = cloneSpan.cloneNode();
 			confirmBtn.classList.add("confirm");
 			confirmBtn.innerText = opts.confirmText;
-			confirmBtn.addEventListener("click", confirm , false);
+			confirmBtn.addEventListener("click", confirm , true);
 			//标题
 			var title = cloneSpan.cloneNode();
 			title.classList.add("title");
@@ -95,27 +98,45 @@
 			nav.append(title);
 			nav.append(confirmBtn);
 			contain.append(nav);
-			createScroll();
+			createShodow();
+			createScrollItems();
 			if(opts.bindele){
 				var ele = opts.bindele;
-				ele.addEventListener("click" ,fnShow , false);
+				ele.addEventListener("click" ,fnShow , true);
 			}
 		})()
 		var items;
 		/**创建滑动主体*/
-		function createScroll(){
+		function createScrollItems(){
 			var main = cloneDiv.cloneNode();
 			main.classList.add("main");
+			/*
+			main.ontouchmove = function(event){
+				//为main 绑定一个事件，目的是为了禁止滚动main时触发body的滚动
+				var event = event ||window.event;
+				event.stopPropagation();
+				event.preventDefault();
+			}*/
 			items  = cloneDiv.cloneNode();
 			items.classList.add("items");
+			if(opts.itemcount){
+				var height = 35 * (opts.itemcount * 2 + 1);
+				main.style.height = height+"px";
+				items.style.paddingTop = (opts.itemcount*35)+"px";
+				items.style.paddingBottom = (opts.itemcount*35)+"px";
+			}
 			if(opts.selectIdx){
 				var trans = opts.selectIdx * 35;
-				items.style.transform= "translateY(-"+trans+"px)";
+				items.style.transform= "translateY(-"+trans+"px)  translateZ(0px)";//translate(0px, -216px) translateZ(0px)
 			}
 			bindEvent(items);
 			main.append(items);
-			opts.data.forEach(function(item){
+			var selectIdx = opts.selectIdx;
+			opts.data.forEach(function(item , idx){
 				var sec = cloneSection.cloneNode();
+				if(is3Dtype()){
+					sec.style.transform = "rotateX("+(idx-selectIdx)*25+"deg)";
+				}
 				sec.classList.add("item");
 				if(typeof item === 'object'){
 					sec.innerText = item.name;
@@ -130,44 +151,56 @@
 				items.append(sec);
 			})
 			contain.append(main);
-			createShodow();
+			
 		}
 
 		/**选择器模糊遮罩层*/
 		function createShodow(){
-			var ShodowTop = cloneDiv.cloneNode();
-			ShodowTop.classList.add("shadow-top");
-			var ShodowBottom = cloneDiv.cloneNode();
-			ShodowBottom.classList.add("shadow-bottom");
-			contain.append(ShodowTop);
-			contain.append(ShodowBottom);
+			var shodowTop = cloneDiv.cloneNode();
+			shodowTop.classList.add("shadow-top");
+			var shodowBottom = cloneDiv.cloneNode();
+			shodowBottom.classList.add("shadow-bottom");
+			if(opts.itemcount){
+				var height = 35 * opts.itemcount;
+				shodowTop.style.height = height+"px";
+				shodowBottom.style.height = height+"px";
+				shodowBottom.style.top = (height+35 +35)+"px";
+			}
+			contain.append(shodowTop);
+			contain.append(shodowBottom);
 		}
 		function bindEvent(ele){
 			if(!ele){
 				return;
 			}
-			ele.addEventListener("touchstart" , fnTouchstart , false);
-			ele.addEventListener("touchmove" , fnTouchmove, false);
-			ele.addEventListener("touchend" , fnTouchend, false);
+			ele.addEventListener("touchstart" , fnTouchstart , true);
+			ele.addEventListener("touchmove" , fnTouchmove, true);
+			ele.addEventListener("touchend" , fnTouchend, true);
 		}
 
 		var 
 		startY, //开始滑动时的y轴坐标
 		startTime, //开始触屏时的时间
-		movedistance = opts.selectIdx ? (-opts.selectIdx * 35) : 0;//已经滑动的距离,上一次滑动后离开屏幕后再次滑动时需要
+		selectIdx = opts.selectIdx;
+		movedistance = selectIdx ? (-selectIdx * 35) : 0;//已经滑动的距离,上一次滑动后离开屏幕后再次滑动时需要
+
 		function fnTouchstart(event){
 			var event = event || window.event;
+			event.preventDefault();
 			startY = event.changedTouches[0].clientY;
 			startTime = event.timeStamp;
 		}
 
 		function fnTouchmove(event){
-			
 			var event = event || window.event;
+			event.preventDefault();
 			var curentY= event.touches[0].pageY;
 			var translateY = curentY - startY + movedistance;
 			if(!checkBonud(translateY)){
 				return;
+			}
+			if(is3Dtype()){
+				updateRotate(curentY - startY);
 			}
 			this.style.transform = "translateY("+translateY+"px)"; //实时响应移动
 		}
@@ -175,35 +208,53 @@
 		/**手指离开屏幕，需要处理选择的项不在选中框中间*/
 		function fnTouchend(event){
 			var event = event || window.event;
+			event.preventDefault();
 			var curMoveY = event.changedTouches[0].pageY;
 			var trans = curMoveY - startY;
-			trans = fixPositino(trans);
-			movedistance += trans;
-			if(movedistance > 0){
-				movedistance = 0;
-			} 
-			var len = opts.data.length;
-			if(Math.abs(movedistance) > (len-1) * 35){
-				movedistance =  (len-1) * 35 * (-1);
-			}
-			changeIdx(movedistance);
+			updateMovedistance(trans , function(tran , dist){
+				if(is3Dtype()){
+					updateRotate(tran);
+				}
+			});
+			updateIdx(movedistance);
 			this.style.transform = "translateY("+movedistance+"px)"; //实时响应移动
 		}
 
-		/**修正位置，如不是选择的项不是在两分割线中间，则需要调整至居中*/
-		function fixPositino(trans){
+		/**更新旋转角度*/
+		function updateRotate(trans){
+			//console.log("trans:" +trans);
+			var trans2deg = trans * 25 / 35; //滑动距离转换成角度
+			//console.log("trans2deg: "+trans2deg);
+			[].concat.apply([] , items.children).forEach(function(item , idx){
+				var deg = (idx - selectIdx) * 25 + trans2deg; //原来的角度加上本次改变的角度
+				item.style.transform = "rotateX("+deg+"deg)";
+			})
+		}
+
+		/**touchend时，修正位置，如不是选择的项不是在两分割线中间，则需要调整至居中*/
+		function updateMovedistance(trans , callback){
+			//居中处理
 			var mod =Math.floor(trans % 35);
 			var n = parseInt(trans / 35);
 			var dir = trans > 0 ? 1 : -1;
-			if(mod == 0){
-				return trans;
-			}
 			if(mod*dir >= 17){
 				trans =  (n+dir) * 35;
 			}else{
 				trans = n * 35;
 			}
-			return trans;
+			movedistance += trans;
+			//滑超处理
+			if(movedistance > 0){
+				trans = selectIdx *35; //置零 用于改变角度时
+				movedistance = 0;
+			} 
+			var len = opts.data.length;
+			if(Math.abs(movedistance) > (len-1) * 35){
+				movedistance =  (len-1) * 35 * (-1);
+				trans = (len - selectIdx -1) * 35 * -1;
+			}
+
+			typeof callback === 'function' && callback(trans , movedistance);
 		}
 
 		/**检查边界，禁止滑出可视范围*/
@@ -212,24 +263,26 @@
 			return trans < 75 && trans >((len-1) * 35 +75) *(-1);
 		}
 
+		/**点击遮罩层*/
 		function fnClickModal(){
 			fnHide();
 		}
 
 		/**更新选中项下标*/
-		function changeIdx(trans){
+		function updateIdx(trans){
 			var mod = movedistance % 35;
 			var times = Math.abs(movedistance / 35);
 			if(mod === 0){
-				opts.selectIdx = times;
+				selectIdx = times;
 			}else{
 				times = parseInt(times);
 				if(Math.abs(mod) > 17){
-					opts.selectIdx = times+1;
+					selectIdx = times+1;
 				}else{
-					opts.selectIdx = times-1;
+					selectIdx = times-1;
 				}
 			}
+			opts.selectIdx  = selectIdx;
 		}
 
 		function fnShow(){
@@ -244,13 +297,13 @@
 			typeof callbacks["hide"] === 'function' && callbacks["hide"]();
 		}
 
+		/**获取选中元素对象*/
 		function fnGetSelectedNode(){
-			var idx = opts.selectIdx;
 			var children = items.children;
-			var node = children[idx];
+			var node = children[selectIdx];
 			return node;
 		}
-
+		/**点击确定按钮*/
 		function confirm(){
 			var ele = opts.bindele;
 			if(ele){
@@ -266,9 +319,13 @@
 			}
 			fnHide();
 		}
-
+		/**点击取消按钮*/
 		function cancel(){
 			fnHide();
+		}
+
+		function is3Dtype(){
+			return opts.type3D;
 		}
 
 		/**暴露接口*/
