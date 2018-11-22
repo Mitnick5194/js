@@ -5,24 +5,13 @@
 	<title></title>
 	<style type="text/css">
 		.MAIN_BODY{
+			display: inline-block;
 			border: solid 1px #eee;
-			position: absolute;
-			display: none;
-			z-index: 999;
 		}
 		.MAIN_BODY .CAL{
-			margin:0 10px;
-			display: inline-block;
-			border-right: 1px solid #eee;
-			border-left: 1px solid #eee;
+			width: 250px;
 		}
-		.MAIN_BODY .CAL:nth-child(2){  /* 为什么是2呢 这个问题很复杂 详情百度 nth-child和nth-of-type或查看有道云笔记 */
-			margin: 0;
-		}
-		.MAIN_BODY .CAL:last-child{  /* 为什么是2呢 这个问题很复杂 详情百度 nth-child和nth-of-type或查看有道云笔记 */
-			margin: 0;
-		}
-		 .CAL table{
+		.MAIN_BODY .CAL table{
 			width: 100%;
 			border-collapse: collapse;
 			border-spacing: 0;
@@ -77,29 +66,41 @@
 			color: #00BFFF;
 		}
 		.today{
-			color: red;
-		}
-		.selected{
-			background: #00BFFF;
+			color: #00BFFF;
 		}
 	</style>
 </head>
 <body>
+<!-- <div class="MAIN_BODY">
+	<div class="CAL">
+		<table>
+			<thead>
+				<tr>
+					<td>日</td><td>一</td><td>二</td><td>三</td><td>四</td><td>五</td><td>六</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td>
+				</tr>
+				<tr>
+					<td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td>
+				</tr>
+				<tr>
+					<td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td>
+				</tr>
+				<tr>
+					<td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td>
+				</tr>
 
+			</tbody>
+		</table>
+	</div>
+</div> -->
 <div style="margin-top:100px;margin-left: 200px; "></div>
-<div style=""><span 
-	style="display: inline-block; margin-left: 50px; width: 250px ; height: 35px; border: 1px solid #eee;line-height: 35px;cursor: pointer;text-align:center" data-date="2018-4-22" id="cal"></span></div>
-
-	<div style="height: 500px;"></div>
+<div style="text-align: center"><span data-date="2018-4-22" id="cal"></span></div>
 <script type="text/javascript" src="jquery-1.9.1.js"></script>
 <script type="text/javascript">
-   /**
-	*
-	*  简单下拉式日历 只能选择一个日历 支持回显 
-	*
-	* author: niezhenjie
-	*
-	*/
 	(function(){
 		Date.prototype.format = function(fmt) {
 			var o = {
@@ -127,24 +128,14 @@
 		var opt = {
 			weekstart: 0,
 			date: new Date(),
-			title: '',
-			datanode: 'data-val', //读取挂载日历元素保存日历的属性 默认为data-val属性
-			occallback: '', //打开或关闭日历时的回调
-			curdate: '', //当前选择的日期 内部使用
-			ele: '', //挂载日历的元素 内部使用 
-			calwidth: 250, //单个日历的宽度
-			calnum: 1 //日历的个数 默认为1个
+			title: ''
 		}
 		var week = ['日','一','二','三','四','五','六'];
 		var clonediv = $("<div/>");
 		var clonetable = $('<table><thead></thead<tbody></tbody></table>');
-		var MAINBODY = clonediv.clone().addClass("MAIN_BODY").appendTo("body"); //日历最外层的div 可能会包含多个子div 每个子div对应一个日历table
+		var MAINBODY = clonediv.clone().addClass("MAIN_BODY"); //日历最外层的div 可能会包含多个子div 每个子div对应一个日历table
+		//TODO 应该有一个输入框 而且输入框不应该放在mainbody里面 输入框的宽度应和挂载的元素ele一样 用于显示选择的日历
 		var BUTTON = $("<div class='btnbar'><span class='premonthbtn monthbtn'>&lt;&lt;上一月</span><span class='nextmonthbtn monthbtn'>下一月&gt;&gt;</span></div>").appendTo(MAINBODY);
-	   /**
-		*
-		* 生成日期导航条的内容数组 顺序位置有start决定
-		*
-		*/
 		function genWeek(start){
 			if(0==start || start<0 || start>6 || !start){
 				return week;
@@ -158,7 +149,7 @@
 			}
 			return temp;
 		}
-
+		//genData(1539878400000);
 	   /**
 		* 传进来一个日期 生成改日期月份的数组集 每个子数组表示一行的数据且长度为7 如: [[30,31,1,2,3,4,5],[6,7,8,9,10]....] 数据受星期导航条的开始位置影响
 		*
@@ -215,11 +206,11 @@
 		 */
 		function genWeekTrStr(week){
 			var week = week || genWeek(opt.weekstart);
-			var sb = [];
+			var str = '';
 			$.each(week , function(){
-				sb.push("<td>"+this+"</td>");
+				str += "<td>"+this+"</td>"
 			})
-			return "<tr>"+sb.join("")+"</tr>";
+			return "<tr>"+str+"</tr>";
 		}
 
 		/**
@@ -234,31 +225,23 @@
 			var thisdate = today.getDate(); //今天
 			var datastr = '';
 			var linenum = data.length; //这个月有多少行
-			var issamemonth = samemonth(date , today); //日历当前显示月份是否和今天同一个月
-			var curdate = new Date(opt.curdate).getDate(); //回显日期 日
-			var issamemonthforcurdate = samemonth(new Date(opt.curdate) , date); //日历当前显示月份是否和回显日期同一个月
+			var issamemonth = samemonth(date , today);
 			for(var i=0;i<linenum;i++){
 				var perline = data[i];
-				//var str = "";
-				var sb = [];
+				var str = '';
 				$.each(perline , function(){
 					if(i==0 && this>7){ //只有是第一行 并且当前的数大于7 表示是上个月的 因为这个月 第一行最大的数是7
-					//	str += "<td class='premonth'>"+this+"</td>";
-						sb.push("<td class='premonth'>"+this+"</td>");
+						str += "<td class='premonth'>"+this+"</td>";
 					}else if(linenum-1 == i && this<7){ //最后一行 并且最后一行显示下个月的最多能显示到6号
-					//	str += "<td class='nextmonth'>"+this+"</td>";
-						sb.push("<td class='nextmonth'>"+this+"</td>");
-					}else if(issamemonthforcurdate && this ==curdate ){ //回显日期 有可能是今天 样式优先级比今天高  所以要在今天前面判断
-						sb.push("<td class='selected'>"+this+"</td>")
+						str += "<td class='nextmonth'>"+this+"</td>";
 					}else if(issamemonth&& this == thisdate){ //今天 可能需要特殊处理样式
-					//	str += "<td class='today'>"+this+"</td>";
-						sb.push("<td class='today'>"+this+"</td>");
+						str += "<td class='today'>"+this+"</td>";
 					}else{
-					//	str += "<td>"+this+"</td>";
-						sb.push("<td>"+this+"</td>");
+						str += "<td>"+this+"</td>";
 					}
+					//TODO 判断日期是否为选中或回显日期
 				});
-				datastr += "<tr>"+sb.join("")+"</tr>";
+				datastr += "<tr>"+str+"</tr>";
 			}
 			return datastr;
 		}
@@ -289,7 +272,7 @@
 				date = new Date(date);
 			}
 			var div = clonediv.clone();
-			div.addClass("CAL").attr("data-date" , date.getTime()).css("width" , opt.calwidth); //保存时间戳 点击上下月时需它进行计算
+			div.addClass("CAL").attr("data-date" , date.getTime()); //保存时间戳 点击上下月时需它进行计算
 			var table = clonetable.clone();
 			var thead = table.find("thead");
 			//星期导航条
@@ -304,9 +287,55 @@
 
 		}
 
+		function newCalendar(date){
+			genSubDiv(date); //调用构造一个日历的方法
+			return MAINBODY;
+		}
+		$.prototype.getCalendar = function(config){
+			getCalendar(this , config);
+		}
+		//this指向全局 即window 所以在外部也能访问这个方法
+		this.getCalendar = function(obj , config){
+			$.extend(opt, config);
+			var ele = obj
+			var curdate = ele.attr("data-date");
+			//ele.html(curdate);
+			if(curdate){
+				curdate = new Date(curdate);
+			}else{
+				curdate = new Date();
+			}
+			var mainbody = newCalendar(curdate);
+			ele.after(mainbody);
+		}
+		
+		/********************以下为测试代码*************************/
+	//	genSubDiv(new Date());
+		//console.log(genDataTrStr(null , new Date()));
+		var today = new Date();
 
+		//点击下个月操作
+		$(".nextmonthbtn").bind("click" , function(){
+			var curdate = new Date(parseInt($(this).parents(".CAL").attr("data-date")));
+			
+			var nextmonth = new Date(curdate.getFullYear() , curdate.getMonth()+1 , 1);
+			//重新生成日历
+			console.log(curdate);
+			MAINBODY.html("");
+			genSubDiv(nextmonth);
+			
+		})
+		BUTTON.on("click" ,".monthbtn", function(){
+			var _this = $(this);
+			if(_this.hasClass("premonthbtn")){ //上个月
+				changeMonth('pre');
+			}else if(_this.hasClass('nextmonthbtn')){ //下个月
+				changeMonth('next');
+			}
+			
+		});
 		function changeMonth(type){
-			var curdatets = getCurentMonth('clear'); //getCurentMonth 需要转换
+			var curdatets = clearCalendar(); //clearCalendar返回的是时间戳 需要转换
 			var curdate = new Date(parseInt(curdatets));
 			var newdate;
 			if(type === 'next'){ //下个月
@@ -319,148 +348,24 @@
 			}
 			newCalendar(newdate);
 		}
-
 	   /**
-		* 获取日历当前显示的月份  
+		* 用于点击下（上）一月时使用 如果是多个日历 则返回最后一个
 		*
-		* @param flag 如果flag==clear 则在获取当前日期的同时 还要将日历清空 点击上下月时需要传入
 		*
-		* @return 当前月份日期时间戳字符串
 		*/
-		function getCurentMonth(flag){
+		function clearCalendar(){
 			var cals = MAINBODY.find(".CAL");
 			var old = cals.eq(cals.length-1).attr("data-date"); //data-date保存有时间戳
-			if(flag === 'clear'){
-				cals.remove();
-			}
+			cals.remove();
 			return old;
 		}
-		//点击上下一月
-		BUTTON.on("click" ,".monthbtn", function(){
-			var _this = $(this);
-			if(_this.hasClass("premonthbtn")){ //上个月
-				changeMonth('pre');
-			}else if(_this.hasClass('nextmonthbtn')){ //下个月
-				changeMonth('next');
-			}
-			
-		});
-		//点击日期
-		MAINBODY.on("click" , "td" , function(){
-			var _this = $(this);
-			if(!_this.parents("tbody").length){ //点击的是星期导航条
-				return ;
-			}
-			var curMonth = new Date(parseInt(getCurentMonth()));
-			var clickDate = new Date(curMonth.getFullYear() , curMonth.getMonth() , _this.html());
-			MAINBODY.find(".selected").removeClass("selected");
-			_this.addClass("selected");
-			updateNode(null,clickDate.getTime());
-			slideToggleCalendar();
-
-		})
-
-	   /**
-		* 更新挂载日历的html元素的显示日历
-		*
-		* @param ele 挂载日历的元素 一般是在初次构造会传入
-		* @param: data 内部使用 在点击时改变显示时需要传入 初始化日历时 不读取data参数 读取挂载日历元素的属性（默认data-val）可以在配置中更改,
-		* Date类型为字符串类型 字符串类型接受 yyyy-MM-dd 和yyyy/MM/dd和1539878400000
-		* @param 回调函数
-		*/
-		function updateNode(ele , date , callback){
-			if(!ele){ //如果没有传入 则读取opt保存（会在构造时将节点保存起来）的节点
-				ele = opt.ele; 
-			}
-			if(date && (typeof date === 'string' || typeof date ==='number')){
-				date = new Date(date);
-				ele.attr(opt.datanode , date.format('yyyy-MM-dd')).html(date.format('yyyy-MM-dd'));
-				opt.curdate = date.getTime();
-			}else{ //初始化 读取节点数据
-				ele.html(ele.attr(opt.datanode));
-			}
-			if(typeof callback === 'function'){
-				callback.call(ele); //调用回调函数 this指针指向ele对象
-			}
-			ele.trigger("change"); //出发挂载日历元素的change事件
-		}
-
-       /**
-		* 是日历的位置位于节点处 需将dom对象的this指针传入（即call或apply调用此函数）
-		*
-		*/
-		function adaptePostition(){
-			var offset = this.offset();
-			var height = this.height();
-			MAINBODY.css({
-				top: offset.top + height,
-				left: offset.left
-			});
-		}
-
-		function slideToggleCalendar(){
-			MAINBODY.slideToggle('fast');
-		}
-
-	   /**
-		* 内部构造调用 供外部构造调用和上下各月点击试用
-		*
-		*/
-
-		function newCalendar( date){
-			for(var i=0;i<opt.calnum;i++){
-				genSubDiv(date); //调用生成一个日历的方法
-			}
-		
-			return MAINBODY;
-		}
-
-	   /**
-		*  外部构造入口
-		*
-		*/
-		$.prototype.getCalendar = function(config){
-			getCalendar(this , config);
-		}
-
-	   /**
-		*  外部构造入口
-		*
-		*/
-		this.getCalendar = function(ele , config){
-			$.extend(opt , config);
-			var curdate = ele.attr(opt.datanode);
-			//ele.html(curdate);
-			if(curdate){
-				curdate = new Date(curdate);
-			}else{
-				curdate = new Date();
-			}
-			opt.ele = ele; //将当前挂载日历的节点保起来
-			opt.curdate = curdate.getTime(); //将选择时间戳保存起来 回显需要 
-			var mainbody = newCalendar(curdate); //调用内部构造
-			updateNode(ele);
-			adaptePostition.call(ele);
-			ele.bind("click" ,  slideToggleCalendar); //为节点绑定点击事件
-			
-		}
-		
-		/********************以下为测试代码*************************/
-	//	genSubDiv(new Date());
-		//console.log(genDataTrStr(null , new Date()));
-
-
 
 	})()
 
 </script>
 <script type="text/javascript">
 	var ele = $("#cal");
-	ele.getCalendar({title:'hello world' ,datanode: 'data-date',calnum: 3});
-	ele.on("change" , function(){
-		console.log(new Date(ele.attr("data-date")));
-	})	
-
+	ele.getCalendar({title:'hello world'});
 </script>
 </body>
 </html>

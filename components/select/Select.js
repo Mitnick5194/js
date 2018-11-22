@@ -1,5 +1,6 @@
 /**
- * 
+ *	代替原生select下拉框 
+ *
  * author: niezhenjie
  */
 
