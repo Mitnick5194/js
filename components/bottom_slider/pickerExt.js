@@ -1,5 +1,3 @@
-
-
 /**
   *
   *	底部滑动选择器
@@ -110,13 +108,6 @@
 		function createScrollItems(){
 			var main = cloneDiv.cloneNode();
 			main.classList.add("main");
-			/*
-			main.ontouchmove = function(event){
-				//为main 绑定一个事件，目的是为了禁止滚动main时触发body的滚动
-				var event = event ||window.event;
-				event.stopPropagation();
-				event.preventDefault();
-			}*/
 			items  = cloneDiv.cloneNode();
 			items.classList.add("items");
 			if(opts.itemcount){
@@ -318,10 +309,12 @@
 				}
 			}
 			fnHide();
+			typeof callbacks["confirm"] === 'function' && callbacks["confirm"]();
 		}
 		/**点击取消按钮*/
 		function cancel(){
 			fnHide();
+			typeof callbacks["cancel"] === 'function' && callbacks["cancel"]();
 		}
 
 		function is3Dtype(){
