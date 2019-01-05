@@ -7,7 +7,7 @@
 		window.addEventListener("error" , function(e){
 			console.log("监听到错误");
 			console.log(e);
-			alert(e.error);
+			alert(e.error +" \r\n  "+e.error.stack);
 		})
 	</script>
 </head>
@@ -19,6 +19,8 @@
 	
 	var a;
 	alert(a.name);
+	var b = underfined;
+	var name = b.name
 </script>
 </body>
 

@@ -21,6 +21,12 @@ function WindowPlugin(ele) {
 	}
 	this.clickbackhide = function() {
 		clickbackhide = true;
+		if(clickbackhide) {
+		mask.bind("click" , function() {
+			mask.attr("title" , "关闭");
+			plugin.hide();
+		});
+		}
 	}
 	this.show = function() {
 		mask.show();
@@ -51,6 +57,7 @@ function WindowPlugin(ele) {
 	this.center = function(){
 		center();
 	}
+	
 	if(clickbackhide) {
 		mask.bind("click" , function() {
 			mask.attr("title" , "关闭");
