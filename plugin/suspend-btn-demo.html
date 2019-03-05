@@ -1,0 +1,267 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="suspend-btn.css">
+	<meta name="viewport" content="width=device-width , initial-scale=1,maximum-scale=1.0, user-scalable=0">
+	<meta charset="utf-8">
+	<style type="text/css">
+		
+		.dv{
+			display: inline-block;
+			padding: 20px;
+			background: #888;
+		}
+	</style>
+</head>
+<body>
+	<div id="iDiv">
+		<div class="dv">div1</div>
+		<div class="dv">div2</div>
+		<div class="dv">div3</div>
+		<div class="dv">div4</div>
+		<div class="dv">div5</div>
+	</div>
+	
+<script type="text/javascript" src="http://www.ajie18.top/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="suspend-btn.js"></script>
+<script type="text/javascript">
+	iDiv.addEventListener("touchstart",function(e){
+		e.preventDefault();
+			e.stopPropagation(); //禁止冒泡
+	})
+	iDiv.addEventListener("touchend",function(e){
+		e.preventDefault();
+			e.stopPropagation(); //禁止冒泡
+		alert("aa");
+	})
+
+	var icons = [{
+		url:'http://www.ajie18.top/images/fresh.jpg',
+		text: "刷新",
+		css: {},
+		callback:function(){
+			var panel = arguments[0];
+			panel.hidePanel();
+			alert("刷新");
+		}
+	},{
+		url:'http://www.ajie18.top/images/fresh.jpg',
+		text: "顶部",
+		css: {},
+		callback:function(){
+			alert("顶部");
+		}
+	},{
+		url:'http://www.ajie18.top/images/fresh.jpg',
+		text: "日志",
+		css: {},
+		callback:function(){
+			alert("日志");
+		}
+	},{
+		url:'http://www.ajie18.top/images/fresh.jpg',
+		text: "夜间模式",
+		css: {},
+		callback:function(){
+			alert("夜间模式");
+		}
+	},{
+		url:'http://www.ajie18.top/images/fresh.jpg',
+		text: "后台",
+		css: {},
+		callback:function(){
+			alert("后台");
+		}
+	},{
+		url:'http://www.ajie18.top/images/fresh.jpg',
+		text: "小程序",
+		css: {},
+		callback:function(){
+			alert("小程序");
+		}
+	},]
+	var options = {
+		tapHide: false,
+		icons: icons
+	}
+	$.createSuspendBtn(options);
+</script>
+<script type="text/temp">
+	var icons = [{
+		url:'./images/fresh.jpg',
+		text: "刷新",
+		css: {},
+		callback:function(panel){
+			panel.hide();
+			alert("刷新");
+		}
+	},{
+		url:'./images/fresh.jpg',
+		text: "顶部",
+		css: {},
+		callback:function(){
+			alert("顶部");
+		}
+	},{
+		url:'./images/fresh.jpg',
+		text: "日志",
+		css: {},
+		callback:function(){
+			alert("日志");
+		}
+	},{
+		url:'./images/fresh.jpg',
+		text: "夜间模式",
+		css: {},
+		callback:function(){
+			alert("夜间模式");
+		}
+	},{
+		url:'./images/fresh.jpg',
+		text: "后台",
+		css: {},
+		callback:function(){
+			alert("后台");
+		}
+	},{
+		url:'./images/fresh.jpg',
+		text: "小程序",
+		css: {},
+		callback:function(){
+			alert("小程序");
+		}
+	},
+
+	]
+		var ICON_WIDTH = 60;//图标的宽高
+		var itemWidth = panelWidth / 3;
+		var itemHeight = panelWidth / 2;
+		/* var items = [];
+		items.push($("<div>").addClass("operating-item").css({width: itemWidth,height: itemHeight,top: 0,left: 0}));
+		items.push($("<div>").addClass("operating-item").css({width: itemWidth,height: itemHeight,top: 0,left: itemWidth}));
+		items.push($("<div>").addClass("operating-item").css({width: itemWidth,height: itemHeight,top: 0,left: itemWidth*2}));
+		items.push($("<div>").addClass("operating-item").css({width: itemWidth,height: itemHeight,top: itemHeight,left: 0}));
+		items.push($("<div>").addClass("operating-item").css({width: itemWidth,height: itemHeight,top: itemHeight,left: itemWidth}));
+		items.push($("<div>").addClass("operating-item").css({width: itemWidth,height: itemHeight,top: itemHeight,left: itemWidth*2})) */;
+		//因为每个框里面的内容都不一样，所以用一个集合存起来，方便遍历时使用
+		var boxProperties = [{
+			//1
+			box:{
+				top: 0,
+				left: 0
+			},
+			img:{
+				"padding-top": (itemHeight/3)+"px",
+				right: 0,
+			},
+			textClass:"operating-text-left-top"
+			
+		},{
+			//2
+			box:{
+				top: 0,
+				left: itemWidth
+			},
+			img:{
+				left: (itemWidth-ICON_WIDTH)/2
+			},
+			textClass:"operating-text-center-top"
+			
+		},{
+			//3
+			box:{
+				top: 0,
+				left: itemWidth*2
+			},
+			img:{
+				"padding-top": (itemHeight/3)+"px",
+				left: 0
+			},
+			textClass:"operating-text-right-top"
+			
+		},{
+			//4
+			box:{
+				top: itemHeight,
+				left: 0
+			},
+			img:{
+				right: 0
+			},
+			textClass:"operating-text-left-bottom"
+			
+		},{
+			//5
+			box:{
+				top: itemHeight,
+				left: itemWidth
+			},
+			img:{
+				"padding-top": (itemHeight/3)+"px",
+				left: (itemWidth-ICON_WIDTH)/2
+			},
+			textClass:"operating-text-center-bottom"
+			
+		},{
+			//6
+			box:{
+				top: itemHeight,
+				left: itemWidth*2
+			},
+			img:{
+				left: 0
+			},
+			textClass:"operating-text-right-bottom"
+			
+		}
+		
+		]
+		//不管穿多少个 ，都是6个
+		for(let i=0;i<6;i++){
+			var prop = boxProperties[i];
+			
+			var item = $("<div>").addClass("operating-item operatingTap").css({
+				width: itemWidth,
+				height: itemHeight
+			}).css(prop.box).appendTo(panel);
+			var icon = icons[i];
+			if(!icon){
+				continue;
+			}
+			item[0]["bindCallback"] = icon.callback;
+			$("<img>").addClass("operating-icon").attr("src",icon.url).appendTo(item).css(prop.img);
+			$("<div>").addClass("operating-text").addClass(prop.textClass).html(icon.text).appendTo(item);
+			
+		}
+		/* $("<img>").addClass("operating-icon").attr("src","./images/fresh.jpg").appendTo(item).css({
+			"padding-top": (itemHeight/3)+"px",
+			right: 0,
+			left: "unset"
+		});
+		$("<img>").addClass("operating-icon").attr("src","./images/fresh.jpg").appendTo(item2);
+		$("<img>").addClass("operating-icon").attr("src","./images/fresh.jpg").appendTo(item3).css({
+			"padding-top": (itemHeight/3)+"px",
+			left: 0
+		});
+		$("<img>").addClass("operating-icon").attr("src","./images/fresh.jpg").appendTo(item4).css({
+			right: 0,
+			left: "unset"
+		});
+		$("<img>").addClass("operating-icon").attr("src","./images/fresh.jpg").appendTo(item5).css({
+			"padding-top":(itemHeight/3)+"px",
+		});
+		$("<img>").addClass("operating-icon").attr("src","./images/fresh.jpg").appendTo(item6).css({
+			left: 0
+		});
+		
+		$("<div>").addClass("operating-text operating-text-left-top").html("刷新").appendTo(item);
+		$("<div>").addClass("operating-text operating-text-center-top").html("刷新").appendTo(item2);
+		$("<div>").addClass("operating-text operating-text-right-top").html("刷新").appendTo(item3);
+		$("<div>").addClass("operating-text operating-text-left-bottom").html("刷新").appendTo(item4);
+		$("<div>").addClass("operating-text operating-text-center-bottom").html("刷新").appendTo(item5);
+		$("<div>").addClass("operating-text operating-text-right-bottom").html("刷新").appendTo(item6); */
+		
+</script>
+</body>
+</html>
