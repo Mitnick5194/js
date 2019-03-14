@@ -283,6 +283,11 @@
 		};
 
 		(function(){
+			fillIcons();
+		})();
+
+		function fillIcons(){
+			panel.html("");//先清空
 			var props = getProps();
 			//不管传多少个 ，都是6个
 			for(let i=0;i<6;i++){
@@ -298,9 +303,21 @@
 				var img = $("<img>").addClass("operating-icon").attr("src",icon.url).appendTo(item).css(prop.img);
 				var text = $("<div>").addClass("operating-text").addClass(prop.textClass).html(icon.text).appendTo(item);	
 				handleCallback(img,text,icon.callback);
-
 			}
-		})()
+		}
+
+		/**重新设置icons*/
+		function setIcons(icons){
+			opts.icons = icons;
+			fillIcons();
+		}
+
+		/**改变第idx个icon*/
+		function setIcon(icon,idx){
+			var icons = opts.icons;
+			icons[idx] = icon;
+			setIcons(icons);
+		}
 
 		function handleCallback(img,text,callback){
 			var _img = img[0];
@@ -323,9 +340,9 @@
 		function hidePanel(callback) {
 			panel.removeClass("menu_dialog_show");
 			panel.addClass("menu_dialog_hide");
+			menu.removeClass("hidden");
 			var timing;
 			timing = setTimeout(function(){
-				menu.removeClass("hidden");
 				mask.addClass("hidden");
 				panel.removeClass("menu_dialog_hide");
 				freshBgTimeout();
@@ -457,6 +474,13 @@
 			hidePanel();
 		}
 
+		this.setIcons = function(){
+			setIcons();
+		}
+		this.setIcon = function(icon,idx){
+			setIcon(icon,idx)
+		}
+
 	}
 
 	$.extend($,{
@@ -465,8 +489,5 @@
 		}
 	})
 
-
-	/* 绘制图标部分 */
-	
 
 })(window,jQuery,undefined)

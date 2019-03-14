@@ -28,10 +28,15 @@
 	哈哈哈哈哈
 	<div id="iHide">收起</div>
 </div>
+
+<div id="iSlide">右边滑出</div>
 <script type="text/javascript" src="jquery-1.9.1.js"></script>
 <script type="text/javascript" src="common.js"></script>
 <script type="text/javascript">
-	
+	var slide = $("#iSlide").getSlideWindow({
+		title: "测试滑出",
+		direction: "right"
+	});
 	var frame = $("#iFrime");
 	var frameWindow = frame.getWindow();
 	$("#mBtn").on("click" , function(){
