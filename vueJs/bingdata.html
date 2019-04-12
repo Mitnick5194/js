@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<input type="text" id="iInput" name="">
+	<div id="iBlock"></div>
+
+	<script type="text/javascript">
+		var obj = {name: "jie"};
+		iBlock.innerText = obj.name;
+		Object.defineProperty(obj,"name",{
+			get:function(){
+				return val
+			},
+			set:function(newVal){
+				iBlock.innerText = newVal;
+			}
+		})
+		iInput.addEventListener("keydown",function(e){
+			var key = e.key;
+			var val = this.value + key;
+			obj.name = val;
+		},false)
+
+
+	</script>
+</body>
+</html>
