@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.funnel-wrap{width: 100px;height:100px; text-align: center;position: relative;}
+		.funnel-wrap>.funnel-item{position: absolute; display: inline-block;width: 3px;height: 10px;background: #ccc;animation:loading 2.5s 1s infinite linear  }
+
+		@keyframes loading{
+			0%{background: #ccc;height: 10%;top:40%;}
+			50%{background: #444;height: 100%;top:20;}
+			100%{background: #ccc;height: 10%;top:40%;}
+		}
+	</style>
+</head>
+<body>
+
+<!-- <div class="funnel-wrap">
+	<div class="funnel-item"></div>
+	<div class="funnel-item"></div>
+	<div class="funnel-item"></div>
+	<div class="funnel-item"></div>
+	<div class="funnel-item"></div>
+	<div class="funnel-item"></div>
+	<div class="funnel-item"></div>
+	<div class="funnel-item"></div>
+	<div class="funnel-item"></div>
+	<div class="funnel-item"></div>
+	<div class="funnel-item"></div>
+</div> -->
+
+<script src="http://www.ajie18.top/js/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+	var wrap = $("<div>").addClass("funnel-wrap");
+	for(let i=0;i<11;i++){
+		var item = $("<div>").addClass("funnel-item");
+		var left = 15*(i+1);
+		var delay = 2.5/5 * i;
+		item.css({
+			left: left,
+			"animation-delay": (-delay)+"s"
+		});
+		item.appendTo(wrap);
+	}
+	wrap.appendTo($(document.body));
+
+</script>
+</body>
+</html>
