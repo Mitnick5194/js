@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width ,initial-scale=1,maximum-scale=1.0, user-scalable=0">
+	<meta charset="utf-8">
+	<title></title>
+	<style type="text/css">
+		#iDiv{
+			width: 500px;
+			display: flex;
+			flex-wrap: nowrap;
+			height: 400px;
+			transition: transform .3s ease
+		}
+		#iDiv>div {
+			display: inline-block;
+			width: 100px;
+		}
+	</style>
+</head>
+<body>
+
+<div style="width: 100px;overflow: hidden">
+	<div id='iDiv'>
+	<div style="background: red">1</div>
+	<div style="background: yellow">2</div>
+	<div style="background: #00e">3</div>
+	<div style="background: #888">4</div>
+	<div style="background: #000">5</div>
+</div>
+
+</div>
+
+
+<script type="text/javascript" src="Slider.js"></script>
+<script type="text/javascript">
+	var idx = 1;
+	var slider = new Slider(iDiv,null);
+	slider.move(function(ret){
+		if(ret.absDistX > 100){
+			return;
+		}
+		iDiv.style.transform = 'translateX('+ret.distX+'px)'
+	}).complete(function(ret){
+		
+	}).success(function(ret){
+		console.log(ret);
+		var idx = iDiv.dataset.idx || 0;
+		var direction = ret.direction
+		if(direction == 1 && idx == 1) {
+			return;
+		}
+		if(direction == -1 && idx == 3) {
+			return;
+		}
+		var _idx = direction == -1 ? (idx - 1) : (idx +1);
+		var transformX = _idx * 100;
+		iDiv.style.transform = 'translateX('+transformX+'px)'
+		iDiv.setAttribute("data-idx",_idx);
+		slider.setOffset(transformX);
+	})
+</script>
+</body>
+</html>
