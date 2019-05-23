@@ -20,7 +20,7 @@
 </head>
 <body>
 
-<div style="width: 100%;overflow: hidden">
+<div style="width: 100%;overflow: hidden;height: 100px;overflow-y: scroll; ">
 	<div id='iDiv'>
 	<div style="background: red">1</div>
 	<div style="background: yellow">2</div>
@@ -34,10 +34,10 @@
 <script type="text/javascript" src="Slider.js"></script>
 <script type="text/javascript">
 	var idx = 1;
-	var slider = new SliderFactory.createSlider(iDiv,iDiv,{
+	var slider = SliderFactory.createSlider(iDiv,iDiv,{
 		autoCtrl: true,
 		pageCount: 5,
-		notFireDistX:100
+		minDistX:5
 
 	});
 	slider.move(function(ret){

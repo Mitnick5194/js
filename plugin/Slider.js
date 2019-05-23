@@ -27,9 +27,9 @@
  	};
  })(window,function(slider,target,conf){
 	var config = {
-		fireDistX: 200,//x轴滑动距离超过fireDistX，不管用时多长都会触发成功
-		minDistX:100,//x轴滑动距离不超过minDistX，则永远不会触发左右滑动，防止上下滑动时窗口抖动
-		fireSpeed: 0,//x轴滑动距离超过minDistX但不超过fireDistX时，只有速度达到fireSpeed才回触发成功
+		fireDistX: 50,//x轴滑动距离超过fireDistX才会触发成功
+		minDistX:5,//x轴滑动距离不超过minDistX，则永远不会触发左右滑动，防止上下滑动时窗口抖动
+		//fireSpeed: 0,//x轴滑动距离超过minDistX但不超过fireDistX时，只有速度达到fireSpeed才回触发成功TODO
 		autoCtrl: false,//true 表示滑动逻辑由空间控制，true和pageCount同时存在
 		pageCount: 0,//分成多少页
 		idx:0,//当前正在第几页
@@ -89,6 +89,8 @@
 					absDistY: Math.abs(_distY),
 					duration: _duration,
 					direction: _direction,
+					originDistX: _distX - _offsetX,//本地滑动的距离
+					originDistY: _offsetY - _offsetY
 				}
 				
 			},
@@ -113,7 +115,7 @@
 				_distY = _offsetY;
 			},
 			/**判断是否满足触发条件，conditions触发条件,type速度还是距离*/
-			callSuccess:function(condition,type){
+			callSuccess: function(condition,type){
 				var isCall = false;
 				if(type == 'speed'){
 					isCall = Math.abs(Math.abs(_distX) - Math.abs(_offsetX) / _duration) > condition;
@@ -121,7 +123,44 @@
 					isCall = Math.abs(Math.abs(_distX) - Math.abs(_offsetX)) > condition;
 				}
 				return isCall
-			}
+			},
+			isMove: (function(){
+				var _isMove = false;
+				/**type == clear，则清楚数据，每次滑动结束时调用清楚*/
+				return function(dist,type) {
+					if(type == "clear"){
+						_isMove = false;
+						return;
+					}
+					if(_isMove) {
+						return _isMove;
+					}
+					var allowed = Math.abs(dist || 5) * Math.ceil(window.devicePixelRatio / 2)
+					var distX = Math.abs(_distX - _offsetX);
+					var distY = Math.abs(_distY - _offsetY);
+					_isMove = Math.max(distX, distY) > allowed;
+					return _isMove;
+				}
+			})(),
+			/**是否为水平滑动，当dixtX > distY视为水平*/
+			isHorizontal: (function(){
+				/**1是垂直，-1是水平*/
+				var _isHorizontal = null;
+				/**type == clear，则清楚数据，每次滑动结束时调用清楚*/
+				return function(type){
+					if(type == "clear"){
+						_isHorizontal = null;
+						return;
+					}
+					if(_isHorizontal){ //只会判断一次
+						return  _isHorizontal == -1;
+					}
+					var distX = Math.abs(Math.abs(_distX) - Math.abs(_offsetX));
+					var distY = Math.abs(Math.abs(_distY) - Math.abs(_offsetY));
+					_isHorizontal = distX - distY > 0 ? -1 : 1;
+					return _isHorizontal == -1;
+				}
+			})(),
 		}
 
 	}
@@ -303,7 +342,7 @@
 			UTILS.updatePoi(e,current);
 		}
 		UTILS.calCurrent();
-		notify("move");
+		notify("move",event);
 	}
 	function handleTouchEnd(event){
 		UTILS.handletrans(true);
@@ -317,7 +356,7 @@
 	}
 
 	/**根据类型做响应的回调处理*/
-	function notify(type) {
+	function notify(type,event) {
 		if(!sliderWrap.ret){
 			return;
 		}
@@ -330,29 +369,42 @@
 		var direction = ret.direction
 		if(type == "move") {
 			/**当距离少于minDistX，不移动，不然上下移动会受影响*/
-			var isMove = sliderWrap.ret.callSuccess(config.minDistX,"dist");
-			if(!isMove){
-				fireRecovery();
+			var isMove = sliderWrap.ret.isMove(config.minDistX);
+			if(!isMove) {
 				return;
 			}
-			move();
+			//判断是否为水平移动
+			var isHorizontal = sliderWrap.ret.isHorizontal();
+			if(isHorizontal) {
+				//水平，禁止页面左右滑动
+				event.preventDefault();
+				event.stopPropagation();
+				move();
+			}
 			return;
 		}
 		if(type == "end"){
-			//判断触发条件，到达最左或最右不触发翻页且怀远
+			if(!sliderWrap.ret.isHorizontal()){
+				//不是水平滑动
+				fireComplete();
+				fireRecovery();
+				return;
+			}
+			//判断触发条件，到达最左或最右不触发翻页且还原
 			if((direction == 1 && idx == 0) || (direction == -1 && Math.abs(idx) == Math.abs(pageInfo.getPageCount()-1))) {
 				fireRecovery();
 			} else if(!sliderWrap.ret.callSuccess(conf.minDistX,"dist")){
-				//小于minDistX不触发成功，还原滑动
+				//小于minDistX不触发滑动，还原数据
 				fireRecovery();
-			}else if(!sliderWrap.ret.callSuccess(conf.fireSpeed,"speed") && !(distX >= conf.fireDistX) ){
-				//不满足速度要求
+			}else if(!sliderWrap.ret.callSuccess(conf.fireDistX,"dist")){
+				//不满足速度和距离要求
 				fireRecovery();
 			}else {
 				fireSuccess();
 			}
+			fireComplete();
 		}
-		fireComplete();
+		
 	}
 
 	function move(){
@@ -362,7 +414,7 @@
 		}
 		typeof callbacks["move"] === 'function' && callbacks["move"](sliderWrap.ret.getRet(),sliderWrap,UTILS.getPageInfo);
 	}
-	function fireRecovery(){
+	function fireRecovery() {
 		var direction = sliderWrap.ret.getRet().direction
 		var pageInfo = UTILS.getPageInfo();
 		var idx = pageInfo.getIdx();
@@ -395,6 +447,8 @@
 	}
 	function fireComplete(){
 		typeof callbacks["complete"] === 'function' && callbacks["complete"](sliderWrap.ret.getRet(),sliderWrap,UTILS.getPageInfo);
+		sliderWrap.ret.isHorizontal("clear");
+		sliderWrap.ret.isMove(null,"clear");
 		UTILS.clear();//清除滑动数据
 	}
 
