@@ -6,21 +6,21 @@
 	<title></title>
 	<style type="text/css">
 		#iDiv{
-			width: 500px;
+			width: 500%;
 			display: flex;
 			flex-wrap: nowrap;
 			height: 400px;
-			transition: transform .3s ease
+			/*transition: transform .3s linear*/
 		}
 		#iDiv>div {
 			display: inline-block;
-			width: 100px;
+			width: 100%;
 		}
 	</style>
 </head>
 <body>
 
-<div style="width: 100px;overflow: hidden">
+<div style="width: 100%;overflow: hidden">
 	<div id='iDiv'>
 	<div style="background: red">1</div>
 	<div style="background: yellow">2</div>
@@ -31,20 +31,25 @@
 
 </div>
 
-
 <script type="text/javascript" src="Slider.js"></script>
 <script type="text/javascript">
 	var idx = 1;
-	var slider = new Slider(iDiv,null);
+	var slider = new SliderFactory.createSlider(iDiv,iDiv,{
+		autoCtrl: true,
+		pageCount: 5,
+		notFireDistX:100
+
+	});
 	slider.move(function(ret){
-		if(ret.absDistX > 100){
+		/*if(ret.absDistX > 100){
 			return;
 		}
-		iDiv.style.transform = 'translateX('+ret.distX+'px)'
+		iDiv.style.transform = 'translateX('+ret.distX+'px)'*/
 	}).complete(function(ret){
 		
-	}).success(function(ret){
-		console.log(ret);
+	}).success(function(ret,wrap,pageInfo){
+		console.log(pageInfo.toString());
+		/*console.log(ret);
 		var idx = iDiv.dataset.idx || 0;
 		var direction = ret.direction
 		if(direction == 1 && idx == 1) {
@@ -57,7 +62,7 @@
 		var transformX = _idx * 100;
 		iDiv.style.transform = 'translateX('+transformX+'px)'
 		iDiv.setAttribute("data-idx",_idx);
-		slider.setOffset(transformX);
+		slider.setOffset(transformX);*/
 	})
 </script>
 </body>
